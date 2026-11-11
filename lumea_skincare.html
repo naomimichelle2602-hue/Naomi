@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUMÉA — Your Skin, Your Ritual.</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        lumea: {
+                            50: '#FFF8F8',
+                            100: '#FCECEF',
+                            200: '#F8DDE3',
+                            300: '#E8AAB6',
+                            400: '#D98C9A',
+                            500: '#C97889',
+                            textDark: '#2B2425',
+                            textMuted: '#5F5557',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    transitionTimingFunction: {
+                        'lumea': 'cubic-bezier(0.16, 1, 0.3, 1)',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Playfair Display & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,600&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FFF8F8;
+            color: #2B2425;
+            overflow-x: hidden;
+        }
+        h1, h2, h3, h4, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFF8F8;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E8AAB6;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D98C9A;
+        }
+    </style>
+</head>
+<body class="bg-[#FFF8F8] text-[#2B2425] antialiased selection:bg-[#F8DDE3] selection:text-[#2B2425]">
+
+    <!-- Sticky Navigation Bar -->
+    <header id="navbar" class="sticky top-0 z-40 bg-[#FFF8F8]/80 backdrop-blur-md border-b border-[#F8DDE3]/60 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobile-menu-btn" class="lg:hidden text-[#2B2425] focus:outline-none p-2">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+
+            <!-- Logo -->
+            <div class="flex-1 lg:flex-none text-center lg:text-left">
+                <a href="#" class="font-serif text-2xl sm:text-3xl tracking-widest text-[#2B2425] font-semibold">LUMÉA</a>
+            </div>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden lg:flex items-center space-x-8 text-sm font-medium text-[#5F5557]">
+                <a href="#hero" class="hover:text-[#C97889] transition-colors">Home</a>
+                <a href="#shop" class="hover:text-[#C97889] transition-colors">Shop</a>
+                <a href="#bestsellers" class="hover:text-[#C97889] transition-colors">Best Sellers</a>
+                <a href="#categories" class="hover:text-[#C97889] transition-colors">Skincare</a>
+                <a href="#editorial" class="hover:text-[#C97889] transition-colors">About</a>
+            </nav>
+
+            <!-- Right Action Icons -->
+            <div class="flex items-center space-x-4 sm:space-x-6 text-[#2B2425]">
+                <button onclick="toggleSearch()" class="hover:text-[#C97889] transition-colors p-1" title="Search">
+                    <i class="fa-solid fa-magnifying-glass text-lg"></i>
+                </button>
+                <button onclick="toggleWishlistModal()" class="hover:text-[#C97889] transition-colors p-1 relative" title="Wishlist">
+                    <i class="fa-regular fa-heart text-lg"></i>
+                    <span id="wishlist-badge" class="absolute -top-1 -right-1 bg-[#C97889] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-sans hidden">0</span>
+                </button>
+                <button onclick="toggleCart()" class="hover:text-[#C97889] transition-colors p-1 relative" title="Shopping Bag">
+                    <i class="fa-solid fa-bag-shopping text-lg"></i>
+                    <span id="cart-badge" class="absolute -top-1 -right-1 bg-[#C97889] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-sans">0</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu Dropdown -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-[#FFF8F8] border-b border-[#F8DDE3] px-6 py-4 space-y-3 font-medium text-[#5F5557]">
+            <a href="#hero" class="block hover:text-[#C97889]" onclick="toggleMobileMenu()">Home</a>
+            <a href="#shop" class="block hover:text-[#C97889]" onclick="toggleMobileMenu()">Shop</a>
+            <a href="#bestsellers" class="block hover:text-[#C97889]" onclick="toggleMobileMenu()">Best Sellers</a>
+            <a href="#categories" class="block hover:text-[#C97889]" onclick="toggleMobileMenu()">Skincare</a>
+            <a href="#editorial" class="block hover:text-[#C97889]" onclick="toggleMobileMenu()">About</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative overflow-hidden pt-8 pb-16 md:pt-16 md:pb-24 bg-gradient-to-b from-[#FFF8F8] to-[#FCECEF]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Left Content -->
+                <div class="lg:col-span-6 space-y-6 text-center lg:text-left">
+                    <div class="inline-block uppercase tracking-[0.2em] text-xs font-semibold text-[#C97889] bg-[#F8DDE3]/50 px-3 py-1 rounded-full">
+                        SKINCARE / 2026
+                    </div>
+                    <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal leading-tight text-[#2B2425]">
+                        Your Skin, <br><span class="italic text-[#C97889]">Your Ritual.</span>
+                    </h1>
+                    <p class="text-[#5F5557] text-base sm:text-lg max-w-lg mx-auto lg:mx-0 font-light">
+                        Thoughtfully formulated skincare for soft, hydrated and healthy-looking skin with clean Korean beauty ingredients.
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                        <a href="#shop" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-[#2B2425] text-white hover:bg-[#C97889] transition-all duration-300 font-medium text-sm tracking-wide shadow-sm text-center">
+                            SHOP NOW
+                        </a>
+                        <a href="#categories" class="w-full sm:w-auto px-8 py-3.5 rounded-full border border-[#C97889] text-[#2B2425] hover:bg-[#F8DDE3]/40 transition-all duration-300 font-medium text-sm tracking-wide text-center">
+                            EXPLORE COLLECTION
+                        </a>
+                    </div>
+                </div>
+                <!-- Right Hero Image -->
+                <div class="lg:col-span-6 relative">
+                    <div class="relative mx-auto max-w-md lg:max-w-none">
+                        <div class="absolute -inset-4 bg-[#F8DDE3] rounded-3xl transform -rotate-2 opacity-60"></div>
+                        <img src="https://images.unsplash.com/photo-1608248597359-97bc62d08a56?q=80&w=1000&auto=format&fit=crop" 
+                             alt="LUMÉA Skincare Campaign" 
+                             class="relative rounded-2xl shadow-xl w-full h-[420px] sm:h-[500px] object-cover transition-transform duration-700 hover:scale-[1.01]"
+                             onerror="this.src='https://placehold.co/600x600/FCECEF/C97889?text=LUMEA+Skincare'">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="categories" class="py-16 bg-[#FFF3F5]/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-xl mx-auto mb-12">
+                <span class="text-xs uppercase tracking-[0.2em] text-[#C97889] font-medium">Curated Routine</span>
+                <h2 class="font-serif text-3xl sm:text-4xl mt-2 text-[#2B2425]">Shop by Category</h2>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Category 1: Cleanse -->
+                <div onclick="filterByCategory('Cleanser')" class="group relative rounded-2xl overflow-hidden shadow-sm cursor-pointer aspect-[4/5] bg-[#FCECEF]">
+                    <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=600&auto=format&fit=crop" 
+                         alt="Cleanse" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                         onerror="this.src='https://placehold.co/400x500/FCECEF/C97889?text=Cleanse'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent transition-opacity"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 text-center text-white">
+                        <h3 class="font-serif text-2xl font-medium tracking-wide mb-1">CLEANSE</h3>
+                        <span class="inline-block text-xs uppercase tracking-widest text-[#F8DDE3] opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">EXPLORE &rarr;</span>
+                    </div>
+                </div>
+                <!-- Category 2: Treat -->
+                <div onclick="filterByCategory('Serum')" class="group relative rounded-2xl overflow-hidden shadow-sm cursor-pointer aspect-[4/5] bg-[#FCECEF]">
+                    <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=600&auto=format&fit=crop" 
+                         alt="Treat" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                         onerror="this.src='https://placehold.co/400x500/FCECEF/C97889?text=Treat'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent transition-opacity"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 text-center text-white">
+                        <h3 class="font-serif text-2xl font-medium tracking-wide mb-1">TREAT</h3>
+                        <span class="inline-block text-xs uppercase tracking-widest text-[#F8DDE3] opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">EXPLORE &rarr;</span>
+                    </div>
+                </div>
+                <!-- Category 3: Hydrate -->
+                <div onclick="filterByCategory('Moisturizer')" class="group relative rounded-2xl overflow-hidden shadow-sm cursor-pointer aspect-[4/5] bg-[#FCECEF]">
+                    <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?q=80&w=600&auto=format&fit=crop" 
+                         alt="Hydrate" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                         onerror="this.src='https://placehold.co/400x500/FCECEF/C97889?text=Hydrate'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent transition-opacity"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 text-center text-white">
+                        <h3 class="font-serif text-2xl font-medium tracking-wide mb-1">HYDRATE</h3>
+                        <span class="inline-block text-xs uppercase tracking-widest text-[#F8DDE3] opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">EXPLORE &rarr;</span>
+                    </div>
+                </div>
+                <!-- Category 4: Protect -->
+                <div onclick="filterByCategory('Sunscreen')" class="group relative rounded-2xl overflow-hidden shadow-sm cursor-pointer aspect-[4/5] bg-[#FCECEF]">
+                    <img src="https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?q=80&w=600&auto=format&fit=crop" 
+                         alt="Protect" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                         onerror="this.src='https://placehold.co/400x500/FCECEF/C97889?text=Protect'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent transition-opacity"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 text-center text-white">
+                        <h3 class="font-serif text-2xl font-medium tracking-wide mb-1">PROTECT</h3>
+                        <span class="inline-block text-xs uppercase tracking-widest text-[#F8DDE3] opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">EXPLORE &rarr;</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shop Section & Product Catalog -->
+    <section id="shop" class="py-16 bg-[#FFF8F8]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-xl mx-auto mb-10">
+                <span class="text-xs uppercase tracking-[0.2em] text-[#C97889] font-medium">The Collection</span>
+                <h2 class="font-serif text-3xl sm:text-4xl mt-2 text-[#2B2425]">Shop All Essentials</h2>
+            </div>
+
+            <!-- Search & Filter Controls -->
+            <div class="bg-[#FFF3F5]/60 p-4 sm:p-6 rounded-2xl border border-[#F8DDE3] mb-10 space-y-4">
+                <div class="flex flex-col lg:flex-row gap-4 items-center justify-between">
+                    <!-- Search Input -->
+                    <div class="relative w-full lg:w-80">
+                        <input type="text" id="search-input" oninput="handleSearch()" placeholder="Search products, category..." 
+                               class="w-full bg-white border border-[#F8DDE3] rounded-full px-4 py-2.5 pl-10 text-sm focus:outline-none focus:border-[#C97889] text-[#2B2425]">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-[#C97889] text-sm"></i>
+                    </div>
+
+                    <!-- Category Filter Buttons -->
+                    <div id="category-filters" class="flex flex-wrap gap-2 justify-center lg:justify-end">
+                        <button onclick="setCategoryFilter('All')" class="category-btn px-4 py-1.5 rounded-full text-xs font-medium tracking-wider bg-[#2B2425] text-white transition-all">All</button>
+                        <button onclick="setCategoryFilter('Cleanser')" class="category-btn px-4 py-1.5 rounded-full text-xs font-medium tracking-wider bg-white border border-[#F8DDE3] text-[#5F5557] hover:border-[#C97889] transition-all">Cleanser</button>
+                        <button onclick="setCategoryFilter('Toner')" class="category-btn px-4 py-1.5 rounded-full text-xs font-medium tracking-wider bg-white border border-[#F8DDE3] text-[#5F5557] hover:border-[#C97889] transition-all">Toner</button>
+                        <button onclick="setCategoryFilter('Serum')" class="category-btn px-4 py-1.5 rounded-full text-xs font-medium tracking-wider bg-white border border-[#F8DDE3] text-[#5F5557] hover:border-[#C97889] transition-all">Serum</button>
+                        <button onclick="setCategoryFilter('Moisturizer')" class="category-btn px-4 py-1.5 rounded-full text-xs font-medium tracking-wider bg-white border border-[#F8DDE3] text-[#5F5557] hover:border-[#C97889] transition-all">Moisturizer</button>
+                        <button onclick="setCategoryFilter('Sunscreen')" class="category-btn px-4 py-1.5 rounded-full text-xs font-medium tracking-wider bg-white border border-[#F8DDE3] text-[#5F5557] hover:border-[#C97889] transition-all">Sunscreen</button>
+                        <button onclick="setCategoryFilter('Mask')" class="category-btn px-4 py-1.5 rounded-full text-xs font-medium tracking-wider bg-white border border-[#F8DDE3] text-[#5F5557] hover:border-[#C97889] transition-all">Mask</button>
+                        <button onclick="setCategoryFilter('Eye Care')" class="category-btn px-4 py-1.5 rounded-full text-xs font-medium tracking-wider bg-white border border-[#F8DDE3] text-[#5F5557] hover:border-[#C97889] transition-all">Eye Care</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+                <!-- Dynamically rendered products via JavaScript -->
+            </div>
+
+            <!-- No Products Found State -->
+            <div id="no-products" class="hidden text-center py-16">
+                <p class="font-serif text-xl text-[#5F5557]">No products found.</p>
+                <button onclick="resetFilters()" class="mt-4 px-6 py-2 rounded-full bg-[#C97889] text-white text-sm font-medium">Reset Filters</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Sellers Section -->
+    <section id="bestsellers" class="py-16 bg-[#FCECEF]/40 border-y border-[#F8DDE3]/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <span class="text-xs uppercase tracking-[0.2em] text-[#C97889] font-medium">Customer Favorites</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl mt-2 text-[#2B2425]">Best Sellers</h2>
+                </div>
+                <p class="text-sm text-[#5F5557] mt-2 md:mt-0 max-w-xs">Our most loved formulations, chosen by thousands for radiant skin.</p>
+            </div>
+
+            <div id="bestsellers-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+                <!-- Dynamically populated top 4 products -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Editorial Section: Build Your Ritual -->
+    <section id="editorial" class="py-20 bg-[#FFF8F8]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-xl mx-auto mb-16">
+                <span class="text-xs uppercase tracking-[0.2em] text-[#C97889] font-medium">Daily Routine</span>
+                <h2 class="font-serif text-3xl sm:text-4xl mt-2 text-[#2B2425]">Build Your Ritual.</h2>
+                <p class="text-[#5F5557] text-sm mt-3">A simple 3-step mindful skincare sequence for balanced, glowing skin.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+                <!-- Step 01 -->
+                <div class="bg-[#FFF3F5]/50 border border-[#F8DDE3] rounded-2xl p-6 sm:p-8 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="font-serif text-2xl text-[#C97889] font-medium">01</span>
+                            <span class="text-xs uppercase tracking-widest bg-white px-3 py-1 rounded-full text-[#5F5557] border border-[#F8DDE3]">Cleanse</span>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=600&auto=format&fit=crop" 
+                             alt="Cleanse Step" 
+                             class="rounded-xl w-full h-56 object-cover mb-6 shadow-sm"
+                             onerror="this.src='https://placehold.co/400x300/FCECEF/C97889?text=Cleanse'">
+                        <h3 class="font-serif text-xl font-medium text-[#2B2425] mb-2">Gentle Clarifying Cleanse</h3>
+                        <p class="text-[#5F5557] text-sm font-light leading-relaxed mb-6">
+                            Melt away impurities and makeup without stripping natural moisture. Preps skin to absorb active botanicals.
+                        </p>
+                    </div>
+                    <button onclick="openProductModal(2)" class="w-full py-3 rounded-full bg-white border border-[#C97889] text-[#2B2425] hover:bg-[#C97889] hover:text-white transition-all text-xs uppercase tracking-wider font-medium">
+                        Shop Cloud Foam Cleanser
+                    </button>
+                </div>
+
+                <!-- Step 02 -->
+                <div class="bg-[#FFF3F5]/50 border border-[#F8DDE3] rounded-2xl p-6 sm:p-8 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="font-serif text-2xl text-[#C97889] font-medium">02</span>
+                            <span class="text-xs uppercase tracking-widest bg-white px-3 py-1 rounded-full text-[#5F5557] border border-[#F8DDE3]">Treat</span>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=600&auto=format&fit=crop" 
+                             alt="Treat Step" 
+                             class="rounded-xl w-full h-56 object-cover mb-6 shadow-sm"
+                             onerror="this.src='https://placehold.co/400x300/FCECEF/C97889?text=Treat'">
+                        <h3 class="font-serif text-xl font-medium text-[#2B2425] mb-2">Targeted Serum Infusion</h3>
+                        <p class="text-[#5F5557] text-sm font-light leading-relaxed mb-6">
+                            Deliver high-potency actives deep into the skin barrier to restore luminosity, firmness, and smooth texture.
+                        </p>
+                    </div>
+                    <button onclick="openProductModal(1)" class="w-full py-3 rounded-full bg-white border border-[#C97889] text-[#2B2425] hover:bg-[#C97889] hover:text-white transition-all text-xs uppercase tracking-wider font-medium">
+                        Shop Dewy Glow Serum
+                    </button>
+                </div>
+
+                <!-- Step 03 -->
+                <div class="bg-[#FFF3F5]/50 border border-[#F8DDE3] rounded-2xl p-6 sm:p-8 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="font-serif text-2xl text-[#C97889] font-medium">03</span>
+                            <span class="text-xs uppercase tracking-widest bg-white px-3 py-1 rounded-full text-[#5F5557] border border-[#F8DDE3]">Hydrate</span>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?q=80&w=600&auto=format&fit=crop" 
+                             alt="Hydrate Step" 
+                             class="rounded-xl w-full h-56 object-cover mb-6 shadow-sm"
+                             onerror="this.src='https://placehold.co/400x300/FCECEF/C97889?text=Hydrate'">
+                        <h3 class="font-serif text-xl font-medium text-[#2B2425] mb-2">Barrier Moisture Seal</h3>
+                        <p class="text-[#5F5557] text-sm font-light leading-relaxed mb-6">
+                            Lock in hydration all day long with ceramides and soothing rose extracts that strengthen the skin barrier.
+                        </p>
+                    </div>
+                    <button onclick="openProductModal(3)" class="w-full py-3 rounded-full bg-white border border-[#C97889] text-[#2B2425] hover:bg-[#C97889] hover:text-white transition-all text-xs uppercase tracking-wider font-medium">
+                        Shop Rose Barrier Cream
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Reviews Section -->
+    <section class="py-16 bg-[#FCECEF]/30 overflow-hidden border-t border-[#F8DDE3]/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 text-center">
+            <span class="text-xs uppercase tracking-[0.2em] text-[#C97889] font-medium">Testimonials</span>
+            <h2 class="font-serif text-3xl sm:text-4xl mt-2 text-[#2B2425]">Loved by your skin.</h2>
+        </div>
+
+        <!-- Horizontal scrollable reviews container -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div id="reviews-container" class="flex gap-6 overflow-x-auto pb-6 pt-2 snap-x snap-mandatory scrollbar-none">
+                <!-- Rendered via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Promotional Banner -->
+    <section class="py-16 bg-gradient-to-r from-[#FCECEF] to-[#F8DDE3] my-12">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+            <span class="inline-block uppercase tracking-[0.2em] text-xs font-semibold text-[#C97889] bg-white/80 px-4 py-1 rounded-full">
+                SPECIAL OFFER
+            </span>
+            <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#2B2425]">10% OFF YOUR FIRST RITUAL</h2>
+            <p class="text-[#5F5557] max-w-lg mx-auto text-sm sm:text-base font-light">
+                Discover your new skincare essentials and get 10% off your first order when you join our ritual club.
+            </p>
+            <div class="pt-2">
+                <a href="#shop" class="inline-block px-8 py-3.5 rounded-full bg-[#2B2425] text-white hover:bg-[#C97889] transition-all font-medium text-sm tracking-wide shadow-sm">
+                    SHOP NOW
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-16 bg-[#FFF8F8]">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+            <h2 class="font-serif text-3xl sm:text-4xl text-[#2B2425]">Stay in the glow.</h2>
+            <p class="text-[#5F5557] text-sm font-light">
+                Get skincare tips, new product launches, and exclusive 10% off your first order directly in your inbox.
+            </p>
+            <form onsubmit="handleNewsletter(event)" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto pt-2">
+                <input type="email" id="newsletter-email" required placeholder="Your email address" 
+                       class="flex-1 bg-white border border-[#F8DDE3] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#C97889] text-[#2B2425]">
+                <button type="submit" class="px-8 py-3 rounded-full bg-[#C97889] text-white hover:bg-[#2B2425] transition-all text-sm font-medium tracking-wide">
+                    SUBSCRIBE
+                </button>
+            </form>
+            <div id="newsletter-msg" class="text-xs text-[#C97889] hidden">Thank you for joining our glow list!</div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#FCECEF]/60 border-t border-[#F8DDE3] pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+                <!-- Brand Info -->
+                <div class="lg:col-span-2 space-y-4">
+                    <h3 class="font-serif text-2xl tracking-widest text-[#2B2425]">LUMÉA</h3>
+                    <p class="text-[#5F5557] text-sm font-light max-w-sm">
+                        "Your skin, your ritual." Mindfully crafted skincare combining clean Korean formulations with modern aesthetic luxury.
+                    </p>
+                    <div class="flex space-x-4 pt-2 text-[#C97889]">
+                        <a href="#" class="hover:text-[#2B2425] transition-colors"><i class="fa-brands fa-instagram text-lg"></i></a>
+                        <a href="#" class="hover:text-[#2B2425] transition-colors"><i class="fa-brands fa-tiktok text-lg"></i></a>
+                        <a href="#" class="hover:text-[#2B2425] transition-colors"><i class="fa-brands fa-pinterest text-lg"></i></a>
+                    </div>
+                </div>
+
+                <!-- Shop Links -->
+                <div class="space-y-3">
+                    <h4 class="font-serif text-sm uppercase tracking-wider font-semibold text-[#2B2425]">Shop</h4>
+                    <ul class="space-y-2 text-sm text-[#5F5557] font-light">
+                        <li><a href="#shop" class="hover:text-[#C97889] transition-colors">All Products</a></li>
+                        <li><a href="#bestsellers" class="hover:text-[#C97889] transition-colors">Best Sellers</a></li>
+                        <li><a href="#shop" class="hover:text-[#C97889] transition-colors">New Arrivals</a></li>
+                        <li><a href="#categories" class="hover:text-[#C97889] transition-colors">Skincare Sets</a></li>
+                    </ul>
+                </div>
+
+                <!-- Help Links -->
+                <div class="space-y-3">
+                    <h4 class="font-serif text-sm uppercase tracking-wider font-semibold text-[#2B2425]">Help</h4>
+                    <ul class="space-y-2 text-sm text-[#5F5557] font-light">
+                        <li><a href="#" class="hover:text-[#C97889] transition-colors">FAQ</a></li>
+                        <li><a href="#" class="hover:text-[#C97889] transition-colors">Shipping & Delivery</a></li>
+                        <li><a href="#" class="hover:text-[#C97889] transition-colors">Returns & Refunds</a></li>
+                        <li><a href="#" class="hover:text-[#C97889] transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter Quick -->
+                <div class="space-y-3">
+                    <h4 class="font-serif text-sm uppercase tracking-wider font-semibold text-[#2B2425]">Newsletter</h4>
+                    <p class="text-xs text-[#5F5557] font-light">Subscribe for exclusive offers and skincare tips.</p>
+                    <a href="#newsletter-email" class="inline-block text-xs uppercase tracking-wider font-medium text-[#C97889] underline hover:text-[#2B2425]">Join the list &rarr;</a>
+                </div>
+            </div>
+
+            <div class="border-t border-[#F8DDE3] pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-[#5F5557] font-light">
+                <p>&copy; 2026 LUMÉA. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 sm:mt-0">
+                    <a href="#" class="hover:text-[#C97889]">Privacy Policy</a>
+                    <a href="#" class="hover:text-[#C97889]">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Slide-out Shopping Cart Drawer -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div class="absolute inset-0 bg-black/30 backdrop-blur-sm transition-opacity" onclick="toggleCart()"></div>
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-[#FFF8F8] shadow-2xl flex flex-col">
+                <!-- Cart Header -->
+                <div class="p-6 border-b border-[#F8DDE3] flex items-center justify-between">
+                    <h2 class="font-serif text-xl font-medium text-[#2B2425]">YOUR BAG (<span id="cart-item-count">0</span>)</h2>
+                    <button onclick="toggleCart()" class="text-[#5F5557] hover:text-[#2B2425] p-2">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+
+                <!-- Cart Items List -->
+                <div id="cart-items-list" class="flex-1 overflow-y-auto p-6 space-y-4">
+                    <!-- Populated via JS -->
+                </div>
+
+                <!-- Cart Footer / Checkout -->
+                <div class="p-6 border-t border-[#F8DDE3] bg-[#FFF3F5]/40 space-y-4">
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between text-[#5F5557]">
+                            <span>Subtotal</span>
+                            <span id="cart-subtotal" class="font-medium text-[#2B2425]">Rp 0</span>
+                        </div>
+                        <div class="flex justify-between text-[#5F5557]">
+                            <span>Shipping</span>
+                            <span>Calculated at checkout</span>
+                        </div>
+                        <div class="flex justify-between text-base font-serif font-semibold text-[#2B2425] pt-2 border-t border-[#F8DDE3]">
+                            <span>Total</span>
+                            <span id="cart-total">Rp 0</span>
+                        </div>
+                    </div>
+                    <button onclick="checkout()" class="w-full py-3.5 rounded-full bg-[#2B2425] text-white hover:bg-[#C97889] transition-all text-xs uppercase tracking-widest font-medium shadow-sm">
+                        CHECKOUT
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div id="product-modal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+        <div class="min-h-screen px-4 text-center flex items-center justify-center">
+            <div class="fixed inset-0 bg-black/30 backdrop-blur-sm transition-opacity" onclick="closeProductModal()"></div>
+            <div class="inline-block w-full max-w-3xl p-6 sm:p-8 my-8 text-left align-middle transition-all transform bg-[#FFF8F8] shadow-2xl rounded-2xl relative border border-[#F8DDE3]">
+                <button onclick="closeProductModal()" class="absolute top-4 right-4 text-[#5F5557] hover:text-[#2B2425] p-2 z-10">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+                <div id="modal-content" class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <!-- Dynamically populated product detail content -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wishlist Modal -->
+    <div id="wishlist-modal" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div class="absolute inset-0 bg-black/30 backdrop-blur-sm transition-opacity" onclick="toggleWishlistModal()"></div>
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-[#FFF8F8] shadow-2xl flex flex-col">
+                <div class="p-6 border-b border-[#F8DDE3] flex items-center justify-between">
+                    <h2 class="font-serif text-xl font-medium text-[#2B2425]">WISHLIST (<span id="wishlist-item-count">0</span>)</h2>
+                    <button onclick="toggleWishlistModal()" class="text-[#5F5557] hover:text-[#2B2425] p-2">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+                <div id="wishlist-items-list" class="flex-1 overflow-y-auto p-6 space-y-4">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Box -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-[#2B2425] text-white px-6 py-3 rounded-full shadow-lg text-sm flex items-center space-x-3">
+        <i class="fa-solid fa-circle-check text-[#E8AAB6]"></i>
+        <span id="toast-msg">Product added to bag successfully</span>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Product Dataset (8 realistic skincare products with valid Unsplash image URLs)
+        const products = [
+            {
+                id: 1,
+                name: "Dewy Glow Serum",
+                category: "Serum",
+                price: 129000,
+                rating: 4.9,
+                reviewsCount: 248,
+                image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=800&auto=format&fit=crop",
+                description: "A lightweight, deeply hydrating serum infused with Niacinamide and Hyaluronic acid for glass skin luminosity.",
+                ingredients: "Water, Niacinamide, Sodium Hyaluronate, Centella Asiatica Extract, Glycerin, Panthenol.",
+                benefits: "Deep hydration, brightens dark spots, soothes redness, restores bouncy skin texture."
+            },
+            {
+                id: 2,
+                name: "Cloud Foam Cleanser",
+                category: "Cleanser",
+                price: 89000,
+                rating: 4.8,
+                reviewsCount: 183,
+                image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=800&auto=format&fit=crop",
+                description: "An ultra-gentle amino acid foaming cleanser that lifts away impurities while maintaining optimal skin pH balance.",
+                ingredients: "Water, Sodium Cocoyl Glycinate, Glycerin, Amino Acids, Green Tea Extract, Allantoin.",
+                benefits: "Cleanses without tightness, balances skin barrier, gentle for sensitive skin."
+            },
+            {
+                id: 3,
+                name: "Rose Barrier Cream",
+                category: "Moisturizer",
+                price: 149000,
+                rating: 4.9,
+                reviewsCount: 321,
+                image: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?q=80&w=800&auto=format&fit=crop",
+                description: "A rich yet breathable cream powered by Damask rosewater and ceramides to repair and comfort stressed skin.",
+                ingredients: "Rosa Damascena Flower Water, Ceramide NP, Squalane, Shea Butter, Tocopherol.",
+                benefits: "Locks in moisture for 48 hours, reinforces skin barrier, anti-inflammatory."
+            },
+            {
+                id: 4,
+                name: "Soft Reset Toner",
+                category: "Toner",
+                price: 109000,
+                rating: 4.8,
+                reviewsCount: 156,
+                image: "https://images.unsplash.com/photo-1608248597359-97bc62d08a56?q=80&w=800&auto=format&fit=crop",
+                description: "A refreshing balancing toner with PHA and soothing botanical extracts to gently refine skin texture.",
+                ingredients: "Water, Gluconolactone, Chamomilla Recutita Extract, Betaine, Panthenol.",
+                benefits: "Gentle exfoliation, tightens pores, preps skin for subsequent skincare steps."
+            },
+            {
+                id: 5,
+                name: "Daily Veil Sunscreen",
+                category: "Sunscreen",
+                price: 139000,
+                rating: 4.9,
+                reviewsCount: 412,
+                image: "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?q=80&w=800&auto=format&fit=crop",
+                description: "An invisible SPF 50+ PA++++ broad spectrum sunscreen with zero white cast and a dewy finish.",
+                ingredients: "Water, Ethylhexyl Methoxycinnamate, Zinc Oxide, Niacinamide, Aloe Barbadensis Leaf Juice.",
+                benefits: "High UV protection, lightweight fluid texture, antioxidant defense."
+            },
+            {
+                id: 6,
+                name: "Overnight Glow Mask",
+                category: "Mask",
+                price: 119000,
+                rating: 4.7,
+                reviewsCount: 129,
+                image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=800&auto=format&fit=crop",
+                description: "A sleeping face mask that works overnight to recharge dull skin so you wake up with radiant, baby-soft skin.",
+                ingredients: "Water, Squalane, Collagen, Peptides, Lavender Extract, Hyaluronic Acid.",
+                benefits: "Intensive overnight repair, deep nourishment, wakes up glowing."
+            },
+            {
+                id: 7,
+                name: "Peptide Eye Cream",
+                category: "Eye Care",
+                price: 159000,
+                rating: 4.8,
+                reviewsCount: 97,
+                image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=800&auto=format&fit=crop",
+                description: "A soothing eye cream with multi-peptides and caffeine to instantly depuff and brighten dark circles.",
+                ingredients: "Water, Caffeine, Palmitoyl Tripeptide-1, Niacinamide, Cucumber Extract.",
+                benefits: "Reduces puffiness, brightens under-eyes, firms delicate skin."
+            },
+            {
+                id: 8,
+                name: "Pink Cloud Moisturizer",
+                category: "Moisturizer",
+                price: 139000,
+                rating: 4.9,
+                reviewsCount: 204,
+                image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=800&auto=format&fit=crop",
+                description: "A whipped, featherlight moisture cream packed with white tea and rosehip oil for a supple glow.",
+                ingredients: "Water, Rosehip Seed Oil, White Tea Leaf Extract, Sodium Hyaluronate, Glycerin.",
+                benefits: "Instantly absorbs, non-greasy hydration, antioxidant protection."
+            }
+        ];
+
+        // Customer Reviews Dataset (6 realistic reviews with valid avatar image URLs)
+        const reviews = [
+            {
+                name: "Amelia",
+                comment: "This serum makes my skin feel so hydrated and smooth. I love how lightweight it feels.",
+                rating: 5,
+                avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop"
+            },
+            {
+                name: "Clara S.",
+                comment: "The Cloud Foam Cleanser is incredible. It leaves my face clean without any tight feeling at all.",
+                rating: 5,
+                avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=200&auto=format&fit=crop"
+            },
+            {
+                name: "Nadia Putri",
+                comment: "Rose Barrier Cream saved my dry skin during changes in weather. Absolute must-have!",
+                rating: 5,
+                avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop"
+            },
+            {
+                name: "Jessica W.",
+                comment: "Daily Veil Sunscreen has zero white cast and sits so well under makeup. Obsessed!",
+                rating: 5,
+                avatar: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=200&auto=format&fit=crop"
+            },
+            {
+                name: "Siti Rahma",
+                comment: "My skin looks so radiant and glowy after just one week of using the Dewy Glow Serum. Worth every rupiah!",
+                rating: 5,
+                avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop"
+            },
+            {
+                name: "Dewi Lestari",
+                comment: "The packaging is so pretty and the products smell divine and feel luxurious on skin.",
+                rating: 5,
+                avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=200&auto=format&fit=crop"
+            }
+        ];
+
+        // App State
+        let cart = [];
+        let wishlist = [];
+        let currentCategory = 'All';
+        let searchQuery = '';
+
+        // Format currency to Indonesian Rupiah
+        function formatIDR(price) {
+            return 'Rp ' + price.toLocaleString('id-ID');
+        }
+
+        // Initialize application on window load
+        window.onload = function() {
+            renderProducts(products);
+            renderBestSellers();
+            renderReviews();
+            updateCartCount();
+            updateWishlistCount();
+        };
+
+        // Render products into grid
+        function renderProducts(items) {
+            const grid = document.getElementById('product-grid');
+            const noProducts = document.getElementById('no-products');
+            grid.innerHTML = '';
+
+            if (items.length === 0) {
+                noProducts.classList.remove('hidden');
+                return;
+            } else {
+                noProducts.classList.add('hidden');
+            }
+
+            items.forEach(product => {
+                const isWishlisted = wishlist.some(item => item.id === product.id);
+                const card = document.createElement('div');
+                card.className = 'group bg-white rounded-2xl border border-[#F8DDE3] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between';
+                card.innerHTML = `
+                    <div class="relative overflow-hidden aspect-square bg-[#FFF3F5] cursor-pointer" onclick="openProductModal(${product.id})">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" onerror="this.src='https://placehold.co/400x400/FCECEF/C97889?text=LUMEA'">
+                        <button onclick="event.stopPropagation(); toggleWishlist(${product.id})" class="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-[#2B2425] hover:bg-white shadow-sm transition-colors">
+                            <i class="${isWishlisted ? 'fa-solid text-[#C97889]' : 'fa-regular'} fa-heart"></i>
+                        </button>
+                        <span class="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-full text-[10px] uppercase tracking-wider text-[#5F5557] font-medium">
+                            ${product.category}
+                        </span>
+                    </div>
+                    <div class="p-5 flex flex-col flex-1 justify-between">
+                        <div>
+                            <div class="flex items-center space-x-1 text-xs text-[#C97889] mb-1">
+                                <i class="fa-solid fa-star"></i>
+                                <span class="font-medium text-[#2B2425]">${product.rating}</span>
+                                <span class="text-[#5F5557]">(${product.reviewsCount})</span>
+                            </div>
+                            <h3 onclick="openProductModal(${product.id})" class="font-serif text-lg font-medium text-[#2B2425] hover:text-[#C97889] cursor-pointer transition-colors line-clamp-1">
+                                ${product.name}
+                            </h3>
+                            <p class="text-xs text-[#5F5557] font-light mt-1 line-clamp-2">${product.description}</p>
+                        </div>
+                        <div class="pt-4 mt-4 border-t border-[#FFF3F5] flex items-center justify-between">
+                            <span class="font-serif font-semibold text-[#2B2425]">${formatIDR(product.price)}</span>
+                            <button onclick="addToCart(${product.id})" class="px-4 py-2 rounded-full bg-[#2B2425] text-white hover:bg-[#C97889] transition-all text-xs font-medium tracking-wide">
+                                Add to Bag
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Render Best Sellers (Top 4 rated)
+        function renderBestSellers() {
+            const bestGrid = document.getElementById('bestsellers-grid');
+            bestGrid.innerHTML = '';
+            const topProducts = [...products].sort((a, b) => b.rating - a.rating).slice(0, 4);
+
+            topProducts.forEach(product => {
+                const isWishlisted = wishlist.some(item => item.id === product.id);
+                const card = document.createElement('div');
+                card.className = 'group bg-white rounded-2xl border border-[#F8DDE3] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between';
+                card.innerHTML = `
+                    <div class="relative overflow-hidden aspect-square bg-[#FFF3F5] cursor-pointer" onclick="openProductModal(${product.id})">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" onerror="this.src='https://placehold.co/400x400/FCECEF/C97889?text=LUMEA'">
+                        <button onclick="event.stopPropagation(); toggleWishlist(${product.id})" class="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-[#2B2425] hover:bg-white shadow-sm transition-colors">
+                            <i class="${isWishlisted ? 'fa-solid text-[#C97889]' : 'fa-regular'} fa-heart"></i>
+                        </button>
+                        <span class="absolute bottom-3 left-3 bg-[#C97889] text-white px-2.5 py-1 rounded-full text-[10px] uppercase tracking-wider font-medium">
+                            Best Seller
+                        </span>
+                    </div>
+                    <div class="p-5 flex flex-col flex-1 justify-between">
+                        <div>
+                            <div class="flex items-center space-x-1 text-xs text-[#C97889] mb-1">
+                                <i class="fa-solid fa-star"></i>
+                                <span class="font-medium text-[#2B2425]">${product.rating}</span>
+                                <span class="text-[#5F5557]">(${product.reviewsCount})</span>
+                            </div>
+                            <h3 onclick="openProductModal(${product.id})" class="font-serif text-lg font-medium text-[#2B2425] hover:text-[#C97889] cursor-pointer transition-colors line-clamp-1">
+                                ${product.name}
+                            </h3>
+                            <p class="text-xs text-[#5F5557] font-light mt-1 line-clamp-2">${product.description}</p>
+                        </div>
+                        <div class="pt-4 mt-4 border-t border-[#FFF3F5] flex items-center justify-between">
+                            <span class="font-serif font-semibold text-[#2B2425]">${formatIDR(product.price)}</span>
+                            <button onclick="addToCart(${product.id})" class="px-4 py-2 rounded-full bg-[#2B2425] text-white hover:bg-[#C97889] transition-all text-xs font-medium tracking-wide">
+                                Add to Bag
+                            </button>
+                        </div>
+                    </div>
+                `;
+                bestGrid.appendChild(card);
+            });
+        }
+
+        // Render Reviews
+        function renderReviews() {
+            const container = document.getElementById('reviews-container');
+            container.innerHTML = '';
+
+            reviews.forEach(rev => {
+                const card = document.createElement('div');
+                card.className = 'min-w-[300px] sm:min-w-[350px] bg-white border border-[#F8DDE3] rounded-2xl p-6 shadow-sm flex flex-col justify-between snap-start';
+                card.innerHTML = `
+                    <div>
+                        <div class="flex text-[#C97889] space-x-1 mb-4 text-xs">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-[#2B2425] font-light text-sm italic leading-relaxed mb-6">
+                            "${rev.comment}"
+                        </p>
+                    </div>
+                    <div class="flex items-center space-x-3 pt-4 border-t border-[#FFF3F5]">
+                        <img src="${rev.avatar}" alt="${rev.name}" class="w-10 h-10 rounded-full object-cover" onerror="this.src='https://placehold.co/100x100/FCECEF/C97889?text=User'">
+                        <div>
+                            <h4 class="font-serif font-medium text-sm text-[#2B2425]">${rev.name}</h4>
+                            <span class="text-[10px] uppercase tracking-wider text-[#C97889]">Verified Customer</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Filter by Category buttons
+        function setCategoryFilter(category) {
+            currentCategory = category;
+            
+            // Update button styles
+            const buttons = document.querySelectorAll('.category-btn');
+            buttons.forEach(btn => {
+                if (btn.textContent.trim() === category || (category === 'All' && btn.textContent.trim() === 'All')) {
+                    btn.className = 'category-btn px-4 py-1.5 rounded-full text-xs font-medium tracking-wider bg-[#2B2425] text-white transition-all';
+                } else {
+                    btn.className = 'category-btn px-4 py-1.5 rounded-full text-xs font-medium tracking-wider bg-white border border-[#F8DDE3] text-[#5F5557] hover:border-[#C97889] transition-all';
+                }
+            });
+
+            applyFilters();
+        }
+
+        // Search Input handler
+        function handleSearch() {
+            searchQuery = document.getElementById('search-input').value.toLowerCase();
+            applyFilters();
+        }
+
+        // Apply combined category and search filter
+        function applyFilters() {
+            let filtered = products;
+
+            if (currentCategory !== 'All') {
+                filtered = filtered.filter(p => p.category.toLowerCase() === currentCategory.toLowerCase());
+            }
+
+            if (searchQuery.trim() !== '') {
+                filtered = filtered.filter(p => 
+                    p.name.toLowerCase().includes(searchQuery) || 
+                    p.category.toLowerCase().includes(searchQuery) ||
+                    p.description.toLowerCase().includes(searchQuery)
+                );
+            }
+
+            renderProducts(filtered);
+        }
+
+        // Filter helper from Category cards
+        function filterByCategory(categoryName) {
+            setCategoryFilter(categoryName);
+            const shopSection = document.getElementById('shop');
+            shopSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function resetFilters() {
+            document.getElementById('search-input').value = '';
+            searchQuery = '';
+            setCategoryFilter('All');
+        }
+
+        // Cart functionality
+        function addToCart(productId, quantity = 1) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const existingIndex = cart.findIndex(item => item.id === productId);
+            if (existingIndex > -1) {
+                cart[existingIndex].quantity += quantity;
+            } else {
+                cart.push({ ...product, quantity: quantity });
+            }
+
+            updateCartCount();
+            renderCartItems();
+            showToast(`${product.name} added to your bag.`);
+        }
+
+        function updateCartQuantity(productId, change) {
+            const index = cart.findIndex(item => item.id === productId);
+            if (index > -1) {
+                cart[index].quantity += change;
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+            }
+            updateCartCount();
+            renderCartItems();
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartCount();
+            renderCartItems();
+        }
+
+        function updateCartCount() {
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-badge').innerText = totalCount;
+            document.getElementById('cart-item-count').innerText = totalCount;
+        }
+
+        function renderCartItems() {
+            const list = document.getElementById('cart-items-list');
+            list.innerHTML = '';
+
+            if (cart.length === 0) {
+                list.innerHTML = `<div class="text-center py-12 text-[#5F5557] font-light text-sm">Your shopping bag is empty.</div>`;
+                document.getElementById('cart-subtotal').innerText = formatIDR(0);
+                document.getElementById('cart-total').innerText = formatIDR(0);
+                return;
+            }
+
+            let subtotal = 0;
+
+            cart.forEach(item => {
+                subtotal += item.price * item.quantity;
+                const div = document.createElement('div');
+                div.className = 'flex items-center space-x-4 bg-white p-4 rounded-xl border border-[#F8DDE3]';
+                div.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg bg-[#FFF3F5]" onerror="this.src='https://placehold.co/100x100/FCECEF/C97889?text=LUMEA'">
+                    <div class="flex-1">
+                        <h4 class="font-serif text-sm font-medium text-[#2B2425]">${item.name}</h4>
+                        <span class="text-xs text-[#5F5557]">${formatIDR(item.price)}</span>
+                        <div class="flex items-center space-x-3 mt-2">
+                            <div class="flex items-center border border-[#F8DDE3] rounded-full px-2 py-0.5 text-xs">
+                                <button onclick="updateCartQuantity(${item.id}, -1)" class="px-1.5 text-[#5F5557] hover:text-[#2B2425]">-</button>
+                                <span class="px-2 font-medium">${item.quantity}</span>
+                                <button onclick="updateCartQuantity(${item.id}, 1)" class="px-1.5 text-[#5F5557] hover:text-[#2B2425]">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="removeFromCart(${item.id})" class="text-[#5F5557] hover:text-[#C97889] p-2">
+                        <i class="fa-solid fa-trash-can text-sm"></i>
+                    </button>
+                `;
+                list.appendChild(div);
+            });
+
+            document.getElementById('cart-subtotal').innerText = formatIDR(subtotal);
+            document.getElementById('cart-total').innerText = formatIDR(subtotal);
+        }
+
+        function toggleCart() {
+            const drawer = document.getElementById('cart-drawer');
+            drawer.classList.toggle('hidden');
+            renderCartItems();
+        }
+
+        // Wishlist functionality
+        function toggleWishlist(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const index = wishlist.findIndex(item => item.id === productId);
+            if (index > -1) {
+                wishlist.splice(index, 1);
+                showToast(`${product.name} removed from wishlist.`);
+            } else {
+                wishlist.push(product);
+                showToast(`${product.name} added to wishlist.`);
+            }
+
+            updateWishlistCount();
+            renderProducts(products);
+            renderBestSellers();
+        }
+
+        function updateWishlistCount() {
+            const count = wishlist.length;
+            const badge = document.getElementById('wishlist-badge');
+            badge.innerText = count;
+            if (count > 0) {
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        function toggleWishlistModal() {
+            const modal = document.getElementById('wishlist-modal');
+            modal.classList.toggle('hidden');
+            renderWishlistItems();
+        }
+
+        function renderWishlistItems() {
+            const list = document.getElementById('wishlist-items-list');
+            list.innerHTML = '';
+            document.getElementById('wishlist-item-count').innerText = wishlist.length;
+
+            if (wishlist.length === 0) {
+                list.innerHTML = `<div class="text-center py-12 text-[#5F5557] font-light text-sm">Your wishlist is empty.</div>`;
+                return;
+            }
+
+            wishlist.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'flex items-center space-x-4 bg-white p-4 rounded-xl border border-[#F8DDE3]';
+                div.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg bg-[#FFF3F5]" onerror="this.src='https://placehold.co/100x100/FCECEF/C97889?text=LUMEA'">
+                    <div class="flex-1">
+                        <h4 class="font-serif text-sm font-medium text-[#2B2425]">${item.name}</h4>
+                        <span class="text-xs text-[#5F5557]">${formatIDR(item.price)}</span>
+                    </div>
+                    <button onclick="addToCart(${item.id}); toggleWishlistModal(); toggleCart();" class="px-3 py-1.5 rounded-full bg-[#2B2425] text-white text-[10px] font-medium tracking-wider">
+                        Add to Bag
+                    </button>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        // Product Detail Modal
+        function openProductModal(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const modalContent = document.getElementById('modal-content');
+            modalContent.innerHTML = `
+                <div class="aspect-square bg-[#FFF3F5] rounded-xl overflow-hidden">
+                    <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/500x500/FCECEF/C97889?text=LUMEA'">
+                </div>
+                <div class="space-y-4 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center space-x-1 text-xs text-[#C97889] mb-1">
+                            <i class="fa-solid fa-star"></i>
+                            <span class="font-medium text-[#2B2425]">${product.rating}</span>
+                            <span class="text-[#5F5557]">(${product.reviewsCount} reviews)</span>
+                        </div>
+                        <h2 class="font-serif text-2xl sm:text-3xl font-normal text-[#2B2425]">${product.name}</h2>
+                        <p class="font-serif text-xl font-semibold text-[#2B2425] mt-2">${formatIDR(product.price)}</p>
+                        <p class="text-[#5F5557] text-sm font-light mt-3 leading-relaxed">${product.description}</p>
+                        
+                        <div class="mt-4 space-y-2 border-t border-[#F8DDE3] pt-4 text-xs text-[#5F5557]">
+                            <p><strong class="text-[#2B2425]">Key Benefits:</strong> ${product.benefits}</p>
+                            <p><strong class="text-[#2B2425]">Ingredients:</strong> ${product.ingredients}</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 pt-4">
+                        <div class="flex items-center space-x-4">
+                            <div class="flex items-center border border-[#F8DDE3] rounded-full px-3 py-1 text-sm">
+                                <button onclick="adjustModalQty(-1)" class="px-2 text-[#5F5557] hover:text-[#2B2425]">-</button>
+                                <span id="modal-qty" class="px-4 font-medium">1</span>
+                                <button onclick="adjustModalQty(1)" class="px-2 text-[#5F5557] hover:text-[#2B2425]">+</button>
+                            </div>
+                            <button onclick="addModalToCart(${product.id})" class="flex-1 py-3 rounded-full bg-[#2B2425] text-white hover:bg-[#C97889] transition-all text-xs uppercase tracking-widest font-medium shadow-sm">
+                                Add to Bag
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('product-modal').classList.remove('hidden');
+        }
+
+        function closeProductModal() {
+            document.getElementById('product-modal').classList.add('hidden');
+        }
+
+        function adjustModalQty(change) {
+            const qtySpan = document.getElementById('modal-qty');
+            let currentQty = parseInt(qtySpan.innerText);
+            currentQty += change;
+            if (currentQty < 1) currentQty = 1;
+            qtySpan.innerText = currentQty;
+        }
+
+        function addModalToCart(productId) {
+            const qty = parseInt(document.getElementById('modal-qty').innerText);
+            addToCart(productId, qty);
+            closeProductModal();
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
+
+        // Search bar quick toggle from navigation
+        function toggleSearch() {
+            const shopSection = document.getElementById('shop');
+            shopSection.scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('search-input').focus();
+        }
+
+        // Newsletter handler
+        function handleNewsletter(event) {
+            event.preventDefault();
+            const msg = document.getElementById('newsletter-msg');
+            msg.classList.remove('hidden');
+            document.getElementById('newsletter-email').value = '';
+            setTimeout(() => {
+                msg.classList.add('hidden');
+            }, 5000);
+        }
+
+        // Checkout simulation
+        function checkout() {
+            if (cart.length === 0) {
+                showToast('Your shopping bag is empty.');
+                return;
+            }
+            showToast('Redirecting to secure checkout...');
+            setTimeout(() => {
+                cart = [];
+                updateCartCount();
+                renderCartItems();
+                toggleCart();
+                showToast('Order placed successfully! Thank you for choosing LUMÉA.');
+            }, 2000);
+        }
+
+        // Toast Notification helper
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').innerText = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
