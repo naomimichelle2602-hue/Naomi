@@ -1,0 +1,2426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mooncake Festival 中秋节</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:#fff7f4;
+    color:#70495d;
+    overflow-x:hidden;
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:68px;
+    z-index:999;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 5%;
+    background:rgba(255,249,246,.92);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid #efd6dc;
+}
+
+.logo{
+    font-family:"Playfair Display",serif;
+    font-size:20px;
+    font-weight:700;
+    color:#934764;
+}
+
+.logo span{
+    color:#c86b88;
+    margin-left:8px;
+}
+
+.nav-links{
+    display:flex;
+    gap:24px;
+    list-style:none;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#70495d;
+    font-size:13px;
+    font-weight:600;
+    transition:.25s;
+}
+
+.nav-links a:hover{
+    color:#cf6284;
+}
+
+/* ================= SECTIONS ================= */
+
+section{
+    padding:95px 6%;
+    position:relative;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:35px;
+}
+
+.section-title h2{
+    font-family:"Playfair Display",serif;
+    color:#91445f;
+    font-size:38px;
+}
+
+.section-title p{
+    color:#ae788c;
+    margin-top:7px;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    min-height:100vh;
+    padding-top:120px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    overflow:hidden;
+
+    background:
+    linear-gradient(
+        180deg,
+        #e8d5ed 0%,
+        #f5d8e1 42%,
+        #fff1df 100%
+    );
+}
+
+.hero:after{
+    content:"";
+    position:absolute;
+    bottom:-60px;
+    left:-5%;
+    width:110%;
+    height:180px;
+    background:#fff3e8;
+    border-radius:50% 50% 0 0;
+}
+
+.hero-content{
+    position:relative;
+    z-index:5;
+    max-width:850px;
+}
+
+.hero-label{
+    letter-spacing:4px;
+    font-size:12px;
+    color:#a55a75;
+    font-weight:700;
+}
+
+.hero h1{
+    font-family:"Playfair Display",serif;
+    color:#813c58;
+    font-size:72px;
+    line-height:1;
+    margin:15px 0;
+}
+
+.hero h1 span{
+    display:block;
+    font-size:48px;
+    color:#b95578;
+    margin-top:13px;
+}
+
+.hero p{
+    max-width:650px;
+    margin:20px auto 28px;
+    line-height:1.8;
+    color:#755568;
+}
+
+.main-btn{
+    border:none;
+    display:inline-block;
+    padding:13px 28px;
+    border-radius:30px;
+    background:#c95d82;
+    color:white;
+    text-decoration:none;
+    font-weight:700;
+    cursor:pointer;
+    box-shadow:0 9px 22px rgba(180,80,115,.22);
+    transition:.3s;
+}
+
+.main-btn:hover{
+    transform:translateY(-4px);
+}
+
+/* ================= MOON ================= */
+
+.hero-moon{
+    position:absolute;
+    width:360px;
+    height:360px;
+    border-radius:50%;
+    background:#fff3c7;
+    box-shadow:
+        0 0 35px #ffe7a2,
+        0 0 100px rgba(255,229,157,.65);
+    top:15%;
+    left:50%;
+    transform:translateX(-50%);
+}
+
+.crater{
+    position:absolute;
+    border-radius:50%;
+    background:rgba(219,189,130,.16);
+}
+
+.crater.one{
+    width:50px;
+    height:50px;
+    top:75px;
+    left:85px;
+}
+
+.crater.two{
+    width:35px;
+    height:35px;
+    right:70px;
+    top:115px;
+}
+
+.crater.three{
+    width:65px;
+    height:65px;
+    left:150px;
+    bottom:60px;
+}
+
+/* ================= LANTERNS ================= */
+
+.lantern{
+    position:absolute;
+    width:42px;
+    height:65px;
+    border-radius:22px;
+    background:linear-gradient(
+        90deg,
+        #f4a3b5,
+        #e56f92,
+        #f7a8b8
+    );
+    box-shadow:0 7px 22px rgba(200,85,120,.2);
+    animation:swing 4s ease-in-out infinite;
+    z-index:4;
+}
+
+.lantern:before{
+    content:"";
+    position:absolute;
+    width:2px;
+    height:50px;
+    background:#9c6b72;
+    left:50%;
+    top:-50px;
+}
+
+.lantern:after{
+    content:"";
+    position:absolute;
+    width:20px;
+    height:12px;
+    border-bottom:2px solid #a16a73;
+    left:11px;
+    bottom:-9px;
+}
+
+.lantern span{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    color:#fff2e8;
+    font-size:18px;
+}
+
+.lantern-a{
+    left:7%;
+    top:20%;
+}
+
+.lantern-b{
+    right:8%;
+    top:18%;
+    animation-delay:1s;
+}
+
+.lantern-c{
+    left:18%;
+    top:58%;
+    animation-delay:2s;
+}
+
+.lantern-d{
+    right:18%;
+    top:55%;
+    animation-delay:.5s;
+}
+
+@keyframes swing{
+    0%,100%{transform:rotate(-3deg) translateY(0)}
+    50%{transform:rotate(3deg) translateY(-10px)}
+}
+
+/* ================= FLOATING DECOR ================= */
+
+.floating-flower{
+    position:absolute;
+    color:#e58eaa;
+    font-size:30px;
+    animation:flowerFloat 5s ease-in-out infinite;
+    z-index:3;
+}
+
+.flower-a{left:8%;top:40%}
+.flower-b{right:8%;top:35%;animation-delay:1s}
+.flower-c{left:14%;bottom:15%;animation-delay:2s}
+.flower-d{right:14%;bottom:18%;animation-delay:1.5s}
+
+@keyframes flowerFloat{
+    0%,100%{transform:translateY(0) rotate(0)}
+    50%{transform:translateY(-12px) rotate(8deg)}
+}
+
+/* ================= HISTORY ================= */
+
+.history{
+    background:#fff8f2;
+}
+
+.history-box{
+    max-width:1150px;
+    margin:auto;
+    padding:28px;
+    display:grid;
+    grid-template-columns:1fr 1.4fr;
+    gap:28px;
+    background:#fffdfb;
+    border:2px solid #f1d3da;
+    border-radius:28px;
+    box-shadow:0 15px 35px rgba(110,60,80,.07);
+}
+
+.history-illustration{
+    min-height:370px;
+    border-radius:22px;
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:
+        radial-gradient(circle at 50% 45%,#fff0c1 0 30%,transparent 31%),
+        linear-gradient(145deg,#d9cbea,#f7cbd9);
+}
+
+.history-illustration:before{
+    content:"";
+    position:absolute;
+    width:200px;
+    height:200px;
+    border-radius:50%;
+    background:#fff0c0;
+    box-shadow:0 0 55px #ffe3a2;
+}
+
+.history-illustration:after{
+    content:"✿";
+    position:absolute;
+    font-size:100px;
+    color:#e8a0b6;
+    bottom:30px;
+    right:40px;
+}
+
+.history-text h3{
+    font-family:"Playfair Display",serif;
+    font-size:30px;
+    color:#8b425d;
+    margin-bottom:15px;
+}
+
+.history-text p{
+    line-height:1.75;
+    color:#795b6a;
+    margin-bottom:15px;
+}
+
+.fact-box{
+    padding:20px;
+    border-radius:20px;
+    background:#fff1f4;
+    border:1px solid #efcbd6;
+}
+
+.fact-box h4{
+    color:#aa4f70;
+    margin-bottom:10px;
+}
+
+.fact-box p{
+    margin:8px 0;
+    font-size:14px;
+}
+
+/* ================= ACTIVITIES ================= */
+
+.activities{
+    background:#f8e6ee;
+}
+
+.activity-grid{
+    max-width:1200px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:14px;
+}
+
+.activity-card{
+    min-height:190px;
+    padding:20px 12px;
+    background:#fffaf7;
+    border:2px solid #efcbd6;
+    border-radius:22px;
+    text-align:center;
+    cursor:pointer;
+    transition:.3s;
+    position:relative;
+}
+
+.activity-card:hover{
+    transform:translateY(-7px);
+    box-shadow:0 15px 25px rgba(120,60,90,.12);
+}
+
+.activity-icon{
+    font-size:38px;
+    margin-bottom:10px;
+}
+
+.activity-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:16px;
+    color:#90445f;
+    margin-bottom:8px;
+}
+
+.activity-card p{
+    font-size:12px;
+    line-height:1.5;
+    color:#806172;
+}
+
+.activity-card:after{
+    content:"+";
+    position:absolute;
+    right:10px;
+    bottom:8px;
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:#f4d1dc;
+    color:#a65370;
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:2000;
+    background:rgba(60,35,50,.45);
+    backdrop-filter:blur(8px);
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.modal.active{
+    display:flex;
+}
+
+.modal-box{
+    max-width:550px;
+    width:100%;
+    background:#fffaf7;
+    border:2px solid #efcbd6;
+    border-radius:28px;
+    padding:35px;
+    position:relative;
+    animation:modalPop .3s ease;
+}
+
+@keyframes modalPop{
+    from{transform:scale(.85);opacity:0}
+    to{transform:scale(1);opacity:1}
+}
+
+.close{
+    position:absolute;
+    right:18px;
+    top:12px;
+    border:none;
+    background:none;
+    font-size:28px;
+    color:#a85572;
+    cursor:pointer;
+}
+
+.modal-box h2{
+    font-family:"Playfair Display",serif;
+    color:#8b425e;
+    margin-bottom:15px;
+}
+
+.modal-box p{
+    line-height:1.8;
+    color:#765869;
+}
+
+/* ================= INVITATION ================= */
+
+.invitation{
+    background:#fff9f4;
+}
+
+.invite-card{
+    max-width:900px;
+    margin:auto;
+    padding:40px;
+    text-align:center;
+    border-radius:30px;
+    border:2px solid #efccd6;
+    background:
+        radial-gradient(circle at 10% 90%,#f9d9e3 0 5%,transparent 6%),
+        linear-gradient(135deg,#fff2e8,#f8dce8);
+    position:relative;
+    overflow:hidden;
+}
+
+.invite-card:before{
+    content:"🏮";
+    position:absolute;
+    left:25px;
+    top:20px;
+    font-size:45px;
+}
+
+.invite-card:after{
+    content:"🥮";
+    position:absolute;
+    right:30px;
+    bottom:15px;
+    font-size:48px;
+}
+
+.invite-card h2{
+    font-family:"Playfair Display",serif;
+    font-size:43px;
+    color:#8b425e;
+}
+
+.chinese{
+    color:#c25d7e;
+    font-size:22px;
+    margin:8px 0 20px;
+}
+
+.invite-card input{
+    width:60%;
+    padding:13px 20px;
+    border:2px solid #e8b8c8;
+    border-radius:25px;
+    outline:none;
+    background:#fff;
+    font-family:inherit;
+    margin:15px 0;
+}
+
+.invite-info{
+    display:flex;
+    justify-content:center;
+    gap:70px;
+    margin:20px 0 25px;
+}
+
+.invite-info strong{
+    display:block;
+    color:#9d4c69;
+    margin-bottom:4px;
+}
+
+/* ================= GAME ================= */
+
+.game{
+    background:#e8def0;
+}
+
+.game-layout{
+    max-width:1100px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:1.5fr 1fr;
+    gap:22px;
+}
+
+.game-board{
+    height:420px;
+    border:6px solid white;
+    border-radius:28px;
+    overflow:hidden;
+    position:relative;
+
+    background:
+        radial-gradient(circle at 50% 25%,#fff0bc 0 16%,transparent 17%),
+        linear-gradient(180deg,#9d91c7,#dba8c1 70%,#efc6bd);
+}
+
+.game-board:after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:100px;
+    background:#e5b4bd;
+    border-radius:50% 50% 0 0;
+}
+
+.mooncake{
+    position:absolute;
+    z-index:5;
+    font-size:38px;
+    cursor:pointer;
+    user-select:none;
+    animation:fall linear forwards;
+}
+
+@keyframes fall{
+    from{top:-60px}
+    to{top:430px}
+}
+
+.game-info{
+    padding:28px;
+    border-radius:28px;
+    background:#fffaf7;
+    border:2px solid #efd1db;
+}
+
+.game-info h3{
+    font-family:"Playfair Display",serif;
+    color:#8c455f;
+    font-size:28px;
+    margin-bottom:12px;
+}
+
+.game-info p{
+    line-height:1.7;
+}
+
+.stats{
+    display:flex;
+    gap:12px;
+    margin:20px 0;
+}
+
+.stat{
+    flex:1;
+    padding:15px;
+    text-align:center;
+    background:#fff0f3;
+    border-radius:18px;
+}
+
+.stat strong{
+    display:block;
+    color:#ad5371;
+    font-size:25px;
+    margin-top:4px;
+}
+
+.start-btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:25px;
+    background:#bd5b7c;
+    color:white;
+    font-weight:700;
+    cursor:pointer;
+}
+
+/* ================= PHOTO BOOTH ================= */
+
+.photobooth{
+    background:#fff7f1;
+}
+
+.photo-layout{
+    max-width:1100px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:1.4fr .8fr;
+    gap:25px;
+    align-items:start;
+}
+
+.camera-card{
+    background:#fffdfb;
+    border:2px solid #efd0d9;
+    border-radius:30px;
+    padding:25px;
+    box-shadow:0 10px 30px rgba(100,60,80,.07);
+}
+
+.camera-frame{
+    width:100%;
+    aspect-ratio:4/3;
+    background:#ded5e7;
+    border-radius:22px;
+    overflow:hidden;
+    border:6px solid white;
+    position:relative;
+}
+
+#video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+
+    /* IMPORTANT:
+       normal camera view, NOT mirrored */
+    transform:scaleX(1);
+}
+
+#photoCanvas{
+    display:none;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.camera-controls{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-top:18px;
+}
+
+.photo-btn{
+    padding:12px 19px;
+    border:none;
+    border-radius:25px;
+    background:#c25d7e;
+    color:white;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.photo-btn.light{
+    background:#e0a6b9;
+}
+
+.camera-message{
+    text-align:center;
+    margin-top:12px;
+    font-size:13px;
+    color:#986477;
+}
+
+/* PHOTO STRIP */
+
+.strip-card{
+    background:#f9e7ef;
+    border:2px solid #edc5d2;
+    border-radius:30px;
+    padding:25px;
+    text-align:center;
+}
+
+.strip-card h3{
+    font-family:"Playfair Display",serif;
+    color:#8b425e;
+    font-size:25px;
+    margin-bottom:8px;
+}
+
+.strip-card p{
+    font-size:13px;
+    color:#987084;
+    margin-bottom:18px;
+}
+
+.strip-preview{
+    display:flex;
+    justify-content:center;
+    min-height:350px;
+    align-items:center;
+}
+
+/* Actual strip generated by canvas */
+#stripCanvas{
+    display:none;
+    max-width:190px;
+    width:100%;
+    border-radius:8px;
+    box-shadow:0 10px 25px rgba(90,45,65,.18);
+}
+
+.strip-placeholder{
+    width:170px;
+    height:330px;
+    border:2px dashed #d99ab1;
+    border-radius:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    color:#b17a8c;
+    font-size:13px;
+    background:#fff7f8;
+}
+
+.save-strip{
+    margin-top:18px;
+    width:100%;
+    padding:13px;
+    border:none;
+    border-radius:25px;
+    background:#c25d7e;
+    color:white;
+    font-weight:700;
+    cursor:pointer;
+}
+
+/* ================= QUIZ ================= */
+
+.quiz{
+    background:#f6e6ee;
+}
+
+.quiz-box{
+    max-width:850px;
+    margin:auto;
+    padding:35px;
+    background:#fffdfb;
+    border:2px solid #efccd7;
+    border-radius:28px;
+    text-align:center;
+}
+
+.question{
+    font-family:"Playfair Display",serif;
+    font-size:24px;
+    color:#83415a;
+    margin-bottom:22px;
+}
+
+.answers{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.answers button{
+    border:2px solid #ecc3d0;
+    background:#fff7f8;
+    padding:14px;
+    border-radius:20px;
+    cursor:pointer;
+    color:#714b5c;
+    font-family:inherit;
+}
+
+.answers button:hover{
+    background:#f8dce6;
+}
+
+#quizResult{
+    margin-top:20px;
+    color:#a24e6c;
+    font-weight:700;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+    background:#8b465f;
+    color:#fff4f6;
+    padding:30px;
+    text-align:center;
+}
+
+footer strong{
+    font-family:"Playfair Display",serif;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1050px){
+
+    .activity-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+}
+
+@media(max-width:850px){
+
+    .nav-links{
+        gap:10px;
+    }
+
+    .nav-links a{
+        font-size:10px;
+    }
+
+    .hero h1{
+        font-size:50px;
+    }
+
+    .hero h1 span{
+        font-size:35px;
+    }
+
+    .history-box,
+    .game-layout,
+    .photo-layout{
+        grid-template-columns:1fr;
+    }
+
+    .activity-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:600px){
+
+    .navbar{
+        height:auto;
+        min-height:65px;
+        padding:10px 4%;
+    }
+
+    .logo{
+        font-size:13px;
+    }
+
+    .nav-links{
+        gap:6px;
+        flex-wrap:wrap;
+        justify-content:flex-end;
+    }
+
+    .nav-links a{
+        font-size:8px;
+    }
+
+    .hero h1{
+        font-size:40px;
+    }
+
+    .hero h1 span{
+        font-size:28px;
+    }
+
+    .hero-moon{
+        width:270px;
+        height:270px;
+    }
+
+    .activity-grid{
+        grid-template-columns:1fr;
+    }
+
+    .invite-info{
+        flex-direction:column;
+        gap:15px;
+    }
+
+    .invite-card input{
+        width:100%;
+    }
+
+    .answers{
+        grid-template-columns:1fr;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        Mooncake Festival <span>中秋节</span>
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#history">History</a></li>
+        <li><a href="#activities">Activities</a></li>
+        <li><a href="#invitation">Invitation</a></li>
+        <li><a href="#game">Game</a></li>
+        <li><a href="#photobooth">Photo Booth</a></li>
+        <li><a href="#quiz">Quiz</a></li>
+    </ul>
+
+</nav>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero" id="home">
+
+    <div class="hero-moon">
+        <div class="crater one"></div>
+        <div class="crater two"></div>
+        <div class="crater three"></div>
+    </div>
+
+    <div class="lantern lantern-a"><span>福</span></div>
+    <div class="lantern lantern-b"><span>福</span></div>
+    <div class="lantern lantern-c"><span>福</span></div>
+    <div class="lantern lantern-d"><span>福</span></div>
+
+    <div class="floating-flower flower-a">✿</div>
+    <div class="floating-flower flower-b">✿</div>
+    <div class="floating-flower flower-c">✿</div>
+    <div class="floating-flower flower-d">✿</div>
+
+    <div class="hero-content">
+
+        <div class="hero-label">
+            MID-AUTUMN FESTIVAL
+        </div>
+
+        <h1>
+            Mooncake Festival
+            <span>中秋节</span>
+        </h1>
+
+        <p>
+            Explore the traditions, stories, activities, and celebrations
+            of the Mid-Autumn Festival through our school festival experience.
+        </p>
+
+        <a href="#history" class="main-btn">
+            Explore More
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ================= HISTORY ================= -->
+
+<section class="history" id="history">
+
+    <div class="section-title">
+        <h2>The History</h2>
+        <p>The story behind the Mid-Autumn Festival</p>
+    </div>
+
+    <div class="history-box">
+
+        <div class="history-illustration"></div>
+
+        <div class="history-text">
+
+            <h3>Mooncake Festival</h3>
+
+            <p>
+                The Mooncake Festival, also known as the Mid-Autumn Festival,
+                is a traditional celebration observed on the 15th day of
+                the eighth month of the lunar calendar.
+            </p>
+
+            <p>
+                The full moon is one of the most important symbols of the
+                festival. Its round shape represents completeness, unity,
+                and togetherness.
+            </p>
+
+            <p>
+                One of the best-known legends connected with the festival
+                tells the story of Chang'e, who is believed to live on the moon.
+                The story has different versions throughout Chinese culture.
+            </p>
+
+            <div class="fact-box">
+
+                <h4>Interesting Facts</h4>
+
+                <p>• Celebrated on the 15th day of the 8th lunar month.</p>
+                <p>• The Mandarin name is 中秋节 (Zhōngqiū Jié).</p>
+                <p>• Lanterns are traditional festival decorations.</p>
+                <p>• Mooncakes are one of the festival's best-known foods.</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ACTIVITIES ================= -->
+
+<section class="activities" id="activities">
+
+    <div class="section-title">
+
+        <h2>Festival Activities</h2>
+
+        <p>Click an activity to see more details</p>
+
+    </div>
+
+
+    <div class="activity-grid">
+
+
+        <div class="activity-card"
+             onclick="showActivity(
+             'Mooncake Workshop',
+             'Learn how mooncakes are made, discover their cultural meaning, and decorate your own mooncake with creative patterns alongside your friends.'
+             )">
+
+            <div class="activity-icon">🥮</div>
+
+            <h3>Mooncake Workshop</h3>
+
+            <p>
+                Learn, create, and decorate your own mooncake.
+            </p>
+
+        </div>
+
+
+        <div class="activity-card"
+             onclick="showActivity(
+             'Lantern Making',
+             'Create your own festival lantern using colorful paper and creative designs. Finished lanterns can become part of the school festival decoration.'
+             )">
+
+            <div class="activity-icon">🏮</div>
+
+            <h3>Lantern Making</h3>
+
+            <p>
+                Create beautiful lanterns with your own designs.
+            </p>
+
+        </div>
+
+
+        <div class="activity-card"
+             onclick="showActivity(
+             'Cultural Performance',
+             'Enjoy student performances inspired by Chinese culture, including dance, music, songs, and creative stage performances.'
+             )">
+
+            <div class="activity-icon">🎭</div>
+
+            <h3>Cultural Performance</h3>
+
+            <p>
+                Enjoy performances inspired by Chinese culture.
+            </p>
+
+        </div>
+
+
+        <div class="activity-card"
+             onclick="showActivity(
+             'Festival Games',
+             'Join fun games inspired by the Mooncake Festival and challenge your friends to collect as many points as possible.'
+             )">
+
+            <div class="activity-icon">🎮</div>
+
+            <h3>Festival Games</h3>
+
+            <p>
+                Play fun festival-themed games.
+            </p>
+
+        </div>
+
+
+        <div class="activity-card"
+             onclick="showActivity(
+             'Cultural Quiz',
+             'Test your knowledge about the history, traditions, symbols, legends, and celebrations of the Mid-Autumn Festival.'
+             )">
+
+            <div class="activity-icon">📖</div>
+
+            <h3>Cultural Quiz</h3>
+
+            <p>
+                Test your knowledge of the festival.
+            </p>
+
+        </div>
+
+
+        <div class="activity-card"
+             onclick="showActivity(
+             'Photo Booth',
+             'Use the interactive Photo Booth on this website. Take a photo, create a decorative festival photo strip, and save it to your device.'
+             )">
+
+            <div class="activity-icon">📸</div>
+
+            <h3>Photo Booth</h3>
+
+            <p>
+                Capture and save your festival memories.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ACTIVITY MODAL ================= -->
+
+<div class="modal" id="activityModal">
+
+    <div class="modal-box">
+
+        <button class="close" onclick="closeActivity()">×</button>
+
+        <h2 id="modalTitle"></h2>
+
+        <p id="modalText"></p>
+
+    </div>
+
+</div>
+
+
+<!-- ================= INVITATION ================= -->
+
+<section class="invitation" id="invitation">
+
+    <div class="section-title">
+
+        <h2>You're Invited</h2>
+
+        <p>Join us for a special school celebration</p>
+
+    </div>
+
+
+    <div class="invite-card">
+
+        <h2>You're Invited!</h2>
+
+        <div class="chinese">
+            中秋节 · Mooncake Festival
+        </div>
+
+        <p>
+            Dear <span id="guestDisplay">Guest</span>,
+        </p>
+
+        <input
+            id="guestName"
+            type="text"
+            placeholder="Enter your name"
+            oninput="updateGuest()"
+        >
+
+        <div class="invite-info">
+
+            <div>
+                <strong>Date</strong>
+                25 September 2026
+            </div>
+
+            <div>
+                <strong>Venue</strong>
+                SMAK BPK PENABUR HOLIS
+            </div>
+
+        </div>
+
+        <button class="main-btn" onclick="shareInvitation()">
+            Share Invitation
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ================= GAME ================= -->
+
+<section class="game" id="game">
+
+    <div class="section-title">
+
+        <h2>Mooncake Catch</h2>
+
+        <p>
+            Catch as many mooncakes as possible in 30 seconds
+        </p>
+
+    </div>
+
+
+    <div class="game-layout">
+
+        <div class="game-board" id="gameBoard"></div>
+
+
+        <div class="game-info">
+
+            <h3>How to Play</h3>
+
+            <p>
+                Click the falling mooncakes before they reach
+                the bottom. Every mooncake gives you one point.
+            </p>
+
+
+            <div class="stats">
+
+                <div class="stat">
+                    Score
+                    <strong id="score">0</strong>
+                </div>
+
+                <div class="stat">
+                    Time
+                    <strong id="time">30</strong>
+                </div>
+
+            </div>
+
+
+            <button class="start-btn" onclick="startGame()">
+                Start Game
+            </button>
+
+
+            <p id="gameMessage"
+               style="text-align:center;margin-top:18px;">
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PHOTO BOOTH ================= -->
+
+<section class="photobooth" id="photobooth">
+
+    <div class="section-title">
+
+        <h2>Festival Photo Booth</h2>
+
+        <p>
+            Take a photo and turn it into a cute festival photo strip
+        </p>
+
+    </div>
+
+
+    <div class="photo-layout">
+
+
+        <!-- CAMERA -->
+
+        <div class="camera-card">
+
+            <div class="camera-frame">
+
+                <video
+                    id="video"
+                    autoplay
+                    playsinline>
+                </video>
+
+                <canvas id="photoCanvas"></canvas>
+
+            </div>
+
+
+            <div class="camera-controls">
+
+                <button class="photo-btn"
+                        onclick="startCamera()">
+                    Start Camera
+                </button>
+
+                <button class="photo-btn"
+                        onclick="takePhoto()">
+                    Take Photo
+                </button>
+
+                <button class="photo-btn light"
+                        onclick="retakePhoto()">
+                    Retake
+                </button>
+
+            </div>
+
+
+            <div class="camera-message"
+                 id="cameraMessage">
+                Start the camera to begin.
+            </div>
+
+        </div>
+
+
+        <!-- PHOTO STRIP -->
+
+        <div class="strip-card">
+
+            <h3>Photo Strip</h3>
+
+            <p>
+                Your photo will appear here with a
+                Mooncake Festival frame.
+            </p>
+
+
+            <div class="strip-preview">
+
+                <div class="strip-placeholder"
+                     id="stripPlaceholder">
+
+                    Your festival photo strip
+                    will appear here.
+
+                </div>
+
+                <canvas id="stripCanvas"></canvas>
+
+            </div>
+
+
+            <button class="save-strip"
+                    onclick="downloadStrip()">
+
+                Save Photo Strip
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= QUIZ ================= -->
+
+<section class="quiz" id="quiz">
+
+    <div class="section-title">
+
+        <h2>Festival Quiz</h2>
+
+        <p>
+            How much do you know about the Mid-Autumn Festival?
+        </p>
+
+    </div>
+
+
+    <div class="quiz-box">
+
+        <div class="question"
+             id="question">
+        </div>
+
+        <div class="answers"
+             id="answers">
+        </div>
+
+        <div id="quizResult"></div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <strong>
+        Mooncake Festival 中秋节
+    </strong>
+
+    <p style="margin-top:8px;">
+        25 September 2026 · SMAK BPK PENABUR HOLIS
+    </p>
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+   ACTIVITY POPUP
+===================================================== */
+
+function showActivity(title,text){
+
+    document.getElementById("modalTitle").innerText = title;
+
+    document.getElementById("modalText").innerText = text;
+
+    document
+        .getElementById("activityModal")
+        .classList
+        .add("active");
+
+}
+
+
+function closeActivity(){
+
+    document
+        .getElementById("activityModal")
+        .classList
+        .remove("active");
+
+}
+
+
+document
+    .getElementById("activityModal")
+    .addEventListener("click",function(e){
+
+        if(e.target === this){
+            closeActivity();
+        }
+
+    });
+
+
+/* =====================================================
+   INVITATION
+===================================================== */
+
+function updateGuest(){
+
+    const name =
+        document
+        .getElementById("guestName")
+        .value
+        .trim();
+
+    document
+        .getElementById("guestDisplay")
+        .innerText =
+        name || "Guest";
+
+}
+
+
+function shareInvitation(){
+
+    const name =
+        document
+        .getElementById("guestName")
+        .value
+        .trim() ||
+        "Guest";
+
+
+    const text =
+`You're invited to Mooncake Festival 中秋节!
+
+Dear ${name},
+
+Join us for our special school celebration.
+
+Date: 25 September 2026
+Venue: SMAK BPK PENABUR HOLIS
+
+Come and enjoy cultural activities,
+games, performances, and our Festival Photo Booth!`;
+
+
+    if(navigator.share){
+
+        navigator.share({
+
+            title:"Mooncake Festival 中秋节",
+
+            text:text
+
+        });
+
+    }else{
+
+        navigator.clipboard.writeText(text);
+
+        alert(
+            "Invitation copied! Paste it into your chat."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   MOONCAKE GAME
+===================================================== */
+
+let gameRunning = false;
+
+let score = 0;
+
+let timeLeft = 30;
+
+let gameTimer;
+
+let spawnTimer;
+
+
+function startGame(){
+
+    if(gameRunning) return;
+
+    gameRunning = true;
+
+    score = 0;
+
+    timeLeft = 30;
+
+
+    document
+        .getElementById("score")
+        .innerText = score;
+
+    document
+        .getElementById("time")
+        .innerText = timeLeft;
+
+    document
+        .getElementById("gameMessage")
+        .innerText = "";
+
+    document
+        .getElementById("gameBoard")
+        .innerHTML = "";
+
+
+    gameTimer = setInterval(function(){
+
+        timeLeft--;
+
+        document
+            .getElementById("time")
+            .innerText = timeLeft;
+
+
+        if(timeLeft <= 0){
+
+            endGame();
+
+        }
+
+    },1000);
+
+
+    spawnTimer =
+        setInterval(spawnMooncake,650);
+
+}
+
+
+function spawnMooncake(){
+
+    if(!gameRunning) return;
+
+
+    const board =
+        document.getElementById("gameBoard");
+
+
+    const cake =
+        document.createElement("div");
+
+
+    cake.className = "mooncake";
+
+    cake.innerText = "🥮";
+
+
+    cake.style.left =
+        Math.random() * 90 + "%";
+
+
+    cake.style.animationDuration =
+        (1.7 + Math.random()*1.8) + "s";
+
+
+    cake.onclick = function(){
+
+        score++;
+
+        document
+            .getElementById("score")
+            .innerText = score;
+
+        cake.remove();
+
+    };
+
+
+    board.appendChild(cake);
+
+
+    setTimeout(function(){
+
+        if(cake.parentElement){
+
+            cake.remove();
+
+        }
+
+    },4000);
+
+}
+
+
+function endGame(){
+
+    gameRunning = false;
+
+    clearInterval(gameTimer);
+
+    clearInterval(spawnTimer);
+
+
+    document
+        .getElementById("gameMessage")
+        .innerText =
+        "Time's up! Your final score is " +
+        score +
+        ".";
+
+}
+
+
+/* =====================================================
+   PHOTO BOOTH
+===================================================== */
+
+let cameraStream = null;
+
+
+/* START CAMERA */
+
+async function startCamera(){
+
+    const video =
+        document.getElementById("video");
+
+    const message =
+        document.getElementById("cameraMessage");
+
+
+    try{
+
+        cameraStream =
+            await navigator.mediaDevices.getUserMedia({
+
+                video:{
+                    facingMode:"user"
+                },
+
+                audio:false
+
+            });
+
+
+        video.srcObject = cameraStream;
+
+
+        /*
+        IMPORTANT:
+        The video is NOT mirrored.
+        */
+
+        video.style.transform =
+            "scaleX(1)";
+
+
+        message.innerText =
+            "Camera ready. Take your photo!";
+
+
+    }catch(error){
+
+        message.innerText =
+            "Camera access was not available. Please allow camera permission.";
+
+    }
+
+}
+
+
+/* TAKE PHOTO */
+
+function takePhoto(){
+
+    const video =
+        document.getElementById("video");
+
+    const canvas =
+        document.getElementById("photoCanvas");
+
+
+    if(!cameraStream){
+
+        document
+            .getElementById("cameraMessage")
+            .innerText =
+            "Please start the camera first.";
+
+        return;
+
+    }
+
+
+    canvas.width =
+        video.videoWidth;
+
+    canvas.height =
+        video.videoHeight;
+
+
+    const ctx =
+        canvas.getContext("2d");
+
+
+    /*
+    IMPORTANT:
+    Draw normally.
+    No flip.
+    This prevents the saved photo
+    from becoming mirrored.
+    */
+
+    ctx.drawImage(
+
+        video,
+
+        0,
+        0,
+
+        canvas.width,
+        canvas.height
+
+    );
+
+
+    video.style.display = "none";
+
+    canvas.style.display = "block";
+
+
+    document
+        .getElementById("cameraMessage")
+        .innerText =
+        "Photo captured! Your festival strip is ready.";
+
+
+    createPhotoStrip();
+
+}
+
+
+/* RETAKE */
+
+function retakePhoto(){
+
+    const video =
+        document.getElementById("video");
+
+    const canvas =
+        document.getElementById("photoCanvas");
+
+
+    canvas.style.display = "none";
+
+    video.style.display = "block";
+
+
+    document
+        .getElementById("cameraMessage")
+        .innerText =
+        "Ready for another photo.";
+
+}
+
+
+/* =====================================================
+   CREATE FESTIVAL PHOTO STRIP
+===================================================== */
+
+function createPhotoStrip(){
+
+    const source =
+        document.getElementById("photoCanvas");
+
+
+    const strip =
+        document.getElementById("stripCanvas");
+
+
+    const ctx =
+        strip.getContext("2d");
+
+
+    /*
+    Vertical photo strip:
+    3 photos + decorative border
+    */
+
+    const width = 520;
+
+    const photoWidth = 420;
+
+    const photoHeight = 300;
+
+    const side = 50;
+
+    const top = 95;
+
+    const gap = 25;
+
+    const bottom = 100;
+
+
+    const height =
+        top +
+        photoHeight * 3 +
+        gap * 2 +
+        bottom;
+
+
+    strip.width = width;
+
+    strip.height = height;
+
+
+    /* BACKGROUND */
+
+    ctx.fillStyle = "#fff4e9";
+
+    ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    /* PINK BORDER */
+
+    ctx.strokeStyle = "#d96f91";
+
+    ctx.lineWidth = 12;
+
+    ctx.strokeRect(
+        8,
+        8,
+        width-16,
+        height-16
+    );
+
+
+    /* HEADER */
+
+    ctx.fillStyle = "#91445f";
+
+    ctx.font =
+        "bold 32px Georgia";
+
+    ctx.textAlign = "center";
+
+    ctx.fillText(
+        "Mooncake Festival",
+        width/2,
+        48
+    );
+
+
+    ctx.fillStyle = "#c35c7d";
+
+    ctx.font =
+        "24px serif";
+
+    ctx.fillText(
+        "中秋节",
+        width/2,
+        78
+    );
+
+
+    /* PHOTO PANELS */
+
+    for(let i=0;i<3;i++){
+
+        const y =
+            top +
+            i*(photoHeight+gap);
+
+
+        /* photo border */
+
+        ctx.fillStyle = "#ffffff";
+
+        ctx.fillRect(
+            side-8,
+            y-8,
+            photoWidth+16,
+            photoHeight+16
+        );
+
+
+        /*
+        Fit source image
+        without mirroring
+        */
+
+        drawCoverImage(
+            ctx,
+            source,
+            side,
+            y,
+            photoWidth,
+            photoHeight
+        );
+
+
+        /* Decorative corners */
+
+        ctx.font = "25px serif";
+
+        ctx.fillStyle = "#df7998";
+
+        ctx.fillText(
+            "✿",
+            side-20,
+            y+15
+        );
+
+        ctx.fillText(
+            "✿",
+            side+photoWidth+20,
+            y+photoHeight-5
+        );
+
+    }
+
+
+    /* BOTTOM TEXT */
+
+    ctx.fillStyle = "#a2516e";
+
+    ctx.font =
+        "bold 21px Georgia";
+
+    ctx.fillText(
+        "25 September 2026",
+        width/2,
+        height-58
+    );
+
+
+    ctx.font =
+        "16px Arial";
+
+    ctx.fillText(
+        "SMAK BPK PENABUR HOLIS",
+        width/2,
+        height-30
+    );
+
+
+    /* Mooncakes */
+
+    ctx.font = "40px serif";
+
+    ctx.fillText(
+        "🥮",
+        40,
+        height-30
+    );
+
+    ctx.fillText(
+        "🥮",
+        width-40,
+        height-30
+    );
+
+
+    document
+        .getElementById("stripPlaceholder")
+        .style.display = "none";
+
+
+    strip.style.display = "block";
+
+}
+
+
+/* IMAGE COVER HELPER */
+
+function drawCoverImage(
+    ctx,
+    image,
+    x,
+    y,
+    width,
+    height
+){
+
+    const sourceRatio =
+        image.width / image.height;
+
+    const targetRatio =
+        width / height;
+
+
+    let sx = 0;
+    let sy = 0;
+    let sw = image.width;
+    let sh = image.height;
+
+
+    if(sourceRatio > targetRatio){
+
+        sw =
+            image.height *
+            targetRatio;
+
+        sx =
+            (image.width-sw)/2;
+
+    }else{
+
+        sh =
+            image.width /
+            targetRatio;
+
+        sy =
+            (image.height-sh)/2;
+
+    }
+
+
+    ctx.drawImage(
+
+        image,
+
+        sx,
+        sy,
+        sw,
+        sh,
+
+        x,
+        y,
+        width,
+        height
+
+    );
+
+}
+
+
+/* DOWNLOAD PHOTO STRIP */
+
+function downloadStrip(){
+
+    const strip =
+        document.getElementById("stripCanvas");
+
+
+    if(strip.style.display === "none"){
+
+        alert(
+            "Take a photo first to create your photo strip."
+        );
+
+        return;
+
+    }
+
+
+    const link =
+        document.createElement("a");
+
+
+    link.download =
+        "mooncake-festival-photo-strip.png";
+
+
+    link.href =
+        strip.toDataURL("image/png");
+
+
+    link.click();
+
+}
+
+
+/* =====================================================
+   QUIZ
+===================================================== */
+
+const questions = [
+
+    {
+        q:"When is the Mooncake Festival celebrated?",
+
+        answers:[
+            "15th day of the 8th lunar month",
+            "1st day of January",
+            "25th day of December",
+            "17th day of August"
+        ],
+
+        correct:0
+    },
+
+
+    {
+        q:"What is the Mandarin name of the festival?",
+
+        answers:[
+            "春节",
+            "中秋节",
+            "端午节",
+            "元宵节"
+        ],
+
+        correct:1
+    },
+
+
+    {
+        q:"Which food is strongly associated with the festival?",
+
+        answers:[
+            "Dumplings",
+            "Mooncakes",
+            "Noodles",
+            "Spring rolls"
+        ],
+
+        correct:1
+    },
+
+
+    {
+        q:"What does the full moon often symbolize?",
+
+        answers:[
+            "Unity and togetherness",
+            "Competition",
+            "Travel",
+            "Winter"
+        ],
+
+        correct:0
+    },
+
+
+    {
+        q:"Which legendary figure is associated with the moon?",
+
+        answers:[
+            "Mulan",
+            "Chang'e",
+            "Nezha",
+            "Sun Wukong"
+        ],
+
+        correct:1
+    }
+
+];
+
+
+let currentQuestion = 0;
+
+let quizScore = 0;
+
+
+function loadQuestion(){
+
+    const q =
+        questions[currentQuestion];
+
+
+    document
+        .getElementById("question")
+        .innerText =
+        (currentQuestion+1) +
+        ". " +
+        q.q;
+
+
+    const answers =
+        document.getElementById("answers");
+
+
+    answers.innerHTML = "";
+
+
+    q.answers.forEach(function(answer,index){
+
+        const button =
+            document.createElement("button");
+
+
+        button.innerText =
+            answer;
+
+
+        button.onclick = function(){
+
+            if(index === q.correct){
+
+                quizScore++;
+
+                document
+                    .getElementById("quizResult")
+                    .innerText =
+                    "Correct!";
+
+            }else{
+
+                document
+                    .getElementById("quizResult")
+                    .innerText =
+                    "Not quite!";
+
+            }
+
+
+            currentQuestion++;
+
+
+            setTimeout(function(){
+
+                if(
+                    currentQuestion <
+                    questions.length
+                ){
+
+                    document
+                        .getElementById("quizResult")
+                        .innerText = "";
+
+                    loadQuestion();
+
+                }else{
+
+                    document
+                        .getElementById("question")
+                        .innerText =
+                        "Quiz Complete!";
+
+
+                    document
+                        .getElementById("answers")
+                        .innerHTML = "";
+
+
+                    document
+                        .getElementById("quizResult")
+                        .innerText =
+                        "Your score: " +
+                        quizScore +
+                        " / " +
+                        questions.length;
+
+                }
+
+            },700);
+
+        };
+
+
+        answers.appendChild(button);
+
+    });
+
+}
+
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
+```
