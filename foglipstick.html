@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>AI Magic Mirror: Fog & Lipstick Edition</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 100vw; height: 100vh; overflow: hidden; background: #0d0f12;
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .container { position: relative; width: 100vw; height: 100vh; }
+
+  #video, #fog, #art {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    transform: scaleX(-1);
+  }
+  #video { object-fit: cover; z-index: 1; }
+  #fog   { z-index: 2; }
+  #art   { z-index: 3; }
+
+  .cursor {
+    position: absolute; z-index: 5; width: 26px; height: 26px; margin: -13px 0 0 -13px;
+    border-radius: 50%; border: 2px dashed rgba(255,255,255,.9);
+    box-shadow: 0 0 12px rgba(0,0,0,.35); pointer-events: none; opacity: 0;
+    transition: opacity .2s, transform .15s, background .2s;
+  }
+  .cursor.show { opacity: .85; }
+  .cursor.drawing { border-style: solid; transform: scale(1.2); background: rgba(120,200,255,.3); }
+  body.lipstick .cursor.drawing { background: rgba(214,48,49,.45); border-color: #ff7675; }
+
+  /* Navigasi mode */
+  .topbar {
+    position: absolute; z-index: 10; top: max(16px, env(safe-area-inset-top)); left: 0; right: 0;
+    display: flex; flex-direction: column; align-items: center; gap: 10px; pointer-events: none;
+  }
+  .glass {
+    background: rgba(20,24,32,.45); border: 1px solid rgba(255,255,255,.28);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 6px 24px rgba(0,0,0,.25); color: #fff;
+  }
+  .tabs { display: flex; gap: 4px; padding: 5px; border-radius: 999px; pointer-events: auto; max-width: 94vw; }
+  .tab {
+    font: inherit; font-size: 14px; letter-spacing: .3px; color: rgba(255,255,255,.8);
+    background: transparent; border: 0; border-radius: 999px; padding: 10px 20px; cursor: pointer;
+    transition: background .25s, color .25s;
+  }
+  .tab:hover { color: #fff; }
+  .tab.active { background: rgba(255,255,255,.92); color: #1d2430; font-weight: 600; }
+  body.lipstick .tab.active { background: #d63031; color: #fff; }
+  .hint { padding: 10px 20px; border-radius: 999px; font-size: 13.5px; text-align: center; line-height: 1.4; max-width: 92vw; }
+
+  .clear-btn {
+    position: absolute; z-index: 10; right: 18px; top: max(120px, calc(env(safe-area-inset-top) + 104px));
+    display: flex; align-items: center; gap: 8px; padding: 9px 16px; font: inherit; font-size: 13px;
+    border-radius: 999px; cursor: pointer; transition: background .2s, transform .2s;
+  }
+  .clear-btn:hover { background: rgba(214,48,49,.7); transform: translateY(-1px); }
+  .clear-btn:active { transform: scale(.95); }
+  .clear-btn svg { width: 16px; height: 16px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  .status { position: absolute; z-index: 10; left: 18px; bottom: max(30px, env(safe-area-inset-bottom));
+    padding: 8px 14px; font-size: 12.5px; border-radius: 999px; pointer-events: none; }
+
+  .shutter {
+    position: absolute; z-index: 10; bottom: max(24px, env(safe-area-inset-bottom)); left: 50%;
+    transform: translateX(-50%); width: 72px; height: 72px; display: grid; place-items: center;
+    border-radius: 50%; border: 3px solid rgba(255,255,255,.95); background: rgba(255,255,255,.15);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 10px 30px rgba(0,0,0,.4); cursor: pointer; transition: transform .2s, background .2s;
+  }
+  .shutter::after { content: ""; width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,.92); transition: transform .15s; }
+  .shutter:hover { background: rgba(255,255,255,.28); transform: translateX(-50%) translateY(-3px); }
+  .shutter:active { transform: translateX(-50%) scale(.93); }
+  .shutter:active::after { transform: scale(.88); }
+
+  .flash { position: absolute; inset: 0; z-index: 20; background: #fff; opacity: 0; pointer-events: none; }
+  .flash.go { animation: flash .55s ease-out; }
+  @keyframes flash { from { opacity: .95; } to { opacity: 0; } }
+
+  @media (max-width: 560px) {
+    .tab { padding: 9px 12px; font-size: 12.5px; }
+    .hint { font-size: 12px; border-radius: 20px; }
+    .status { display: none; }
+    .clear-btn { top: auto; bottom: max(44px, env(safe-area-inset-bottom)); right: 16px; }
+  }
+</style>
+</head>
+
+<body>
+<div class="container">
+  <video id="video" autoplay playsinline muted></video>
+  <canvas id="fog"></canvas>
+  <canvas id="art"></canvas>
+  <div class="cursor" id="cur0"></div>
+  <div class="cursor" id="cur1"></div>
+
+  <div class="topbar">
+    <div class="tabs glass">
+      <button class="tab active" data-mode="fog">Mode 1: Kaca Berembun (Fog)</button>
+      <button class="tab" data-mode="lipstick">Mode 2: Lipstik Merah (Lipstick)</button>
+    </div>
+    <div class="hint glass" id="hint">Memuat kamera dan model AI...</div>
+  </div>
+
+  <button class="clear-btn glass" id="clearBtn" aria-label="Hapus semua">
+    <svg viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>
+    Hapus Semua
+  </button>
+
+  <div class="status glass" id="status">Memuat...</div>
+  <button class="shutter" id="shutter" aria-label="Ambil foto" title="Ambil foto"></button>
+  <div class="flash" id="flash"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
+
+<script>
+(() => {
+  /* ============ Pengaturan ============ */
+  const FOG_COLOR    = 'rgba(240, 243, 246, 0.88)';
+  const ERASER_PX    = 56;      // diameter penghapus embun
+  const LIPSTICK     = '#d63031';
+  const LIP_SHADOW   = 'rgba(214, 48, 49, 0.5)';
+  const LIP_WIDTH    = 18;
+  const LIP_BLUR     = 8;
+  const BLOW_HOLD_MS = 800;     // lama manyun sebelum memicu
+  const BREATH_MS    = 2500;    // durasi embun kembali
+  const PUCKER_RATIO = 0.33;    // lebar mulut / lebar wajah (naikkan = lebih mudah terpicu)
+  const SMOOTHING    = 0.5;
+
+  const HINTS = {
+    fog: 'Angkat telunjuk untuk mengelap embun  |  Kepalkan tangan untuk berhenti  |  Manyun untuk tiup embun kembali',
+    lipstick: 'Angkat telunjuk untuk mencoret lipstik  |  Kepalkan tangan untuk berhenti  |  Dua tangan boleh sekaligus'
+  };
+
+  /* ============ Elemen ============ */
+  const $ = id => document.getElementById(id);
+  const videoEl = $('video'), fogCv = $('fog'), artCv = $('art');
+  const fctx = fogCv.getContext('2d'), actx = artCv.getContext('2d');
+  const hintEl = $('hint'), statusEl = $('status'), flashEl = $('flash');
+  const cursors = [$('cur0'), $('cur1')];
+
+  // Kanvas pendukung (tidak ditampilkan)
+  const maskC = document.createElement('canvas'), mctx = maskC.getContext('2d'); // alpha = tebal embun
+  const tintC = document.createElement('canvas'), tctx = tintC.getContext('2d'); // video buram + tint
+  const smallC = document.createElement('canvas'), sctx = smallC.getContext('2d');
+
+  let mode = 'fog';
+  let dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const setStatus = t => statusEl.textContent = t;
+
+  /* ============ Util ============ */
+  const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+  const extended = (lm, tip, pip) => dist(lm[tip], lm[0]) > dist(lm[pip], lm[0]) * 1.08;
+
+  function drawCover(c, w, h) {
+    const vw = videoEl.videoWidth || 640, vh = videoEl.videoHeight || 480;
+    const s = Math.max(w / vw, h / vh);
+    c.drawImage(videoEl, (w - vw * s) / 2, (h - vh * s) / 2, vw * s, vh * s);
+  }
+  // Landmark -> piksel kanvas (object-fit: cover). Kanvas dicerminkan CSS, x tidak dibalik.
+  function toXY(lm) {
+    const vw = videoEl.videoWidth || 640, vh = videoEl.videoHeight || 480;
+    const s = Math.max(artCv.width / vw, artCv.height / vh);
+    return { x: lm.x * vw * s + (artCv.width - vw * s) / 2, y: lm.y * vh * s + (artCv.height - vh * s) / 2 };
+  }
+
+  /* ============ Ukuran kanvas ============ */
+  function fillMask() {
+    mctx.globalCompositeOperation = 'source-over';
+    mctx.clearRect(0, 0, maskC.width, maskC.height);
+    mctx.fillStyle = '#000';
+    mctx.fillRect(0, 0, maskC.width, maskC.height);
+  }
+  function applyBrush() {
+    actx.strokeStyle = actx.fillStyle = LIPSTICK;
+    actx.lineWidth = LIP_WIDTH * dpr;
+    actx.lineCap = 'round';
+    actx.lineJoin = 'round';
+    actx.shadowColor = LIP_SHADOW;
+    actx.shadowBlur = LIP_BLUR * dpr;
+  }
+  function keep(src) {
+    if (!src.width || !src.height) return null;
+    const c = document.createElement('canvas');
+    c.width = src.width; c.height = src.height;
+    c.getContext('2d').drawImage(src, 0, 0);
+    return c;
+  }
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const W = Math.round(innerWidth * dpr), H = Math.round(innerHeight * dpr);
+    const oldMask = keep(maskC), oldArt = keep(artCv);
+    fogCv.width = tintC.width = maskC.width = artCv.width = W;
+    fogCv.height = tintC.height = maskC.height = artCv.height = H;
+    smallC.width = Math.max(16, Math.round(W / 14));
+    smallC.height = Math.max(16, Math.round(H / 14));
+    if (oldMask) mctx.drawImage(oldMask, 0, 0, W, H); else fillMask();
+    if (oldArt) { actx.drawImage(oldArt, 0, 0, W, H); }
+    applyBrush();
+    prev = {};
+  }
+  let prev = {};
+  addEventListener('resize', resize);
+  resize();
+
+  /* ============ Kuas ============ */
+  // Penghapus embun: radial gradient lembut + destination-out
+  function eraseStamp(x, y) {
+    const r = ERASER_PX * dpr / 2;
+    const g = mctx.createRadialGradient(x, y, 0, x, y, r);
+    g.addColorStop(0, 'rgba(0,0,0,1)');
+    g.addColorStop(0.45, 'rgba(0,0,0,0.8)');
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    mctx.fillStyle = g;
+    mctx.beginPath(); mctx.arc(x, y, r, 0, Math.PI * 2); mctx.fill();
+  }
+  function erase(x0, y0, x1, y1) {
+    mctx.globalCompositeOperation = 'destination-out';
+    const step = ERASER_PX * dpr * 0.12;
+    const n = Math.max(1, Math.ceil(Math.hypot(x1 - x0, y1 - y0) / step));
+    for (let i = 0; i <= n; i++) eraseStamp(x0 + (x1 - x0) * i / n, y0 + (y1 - y0) * i / n);
+    mctx.globalCompositeOperation = 'source-over';
+  }
+  // Lipstik: source-over dengan shadow
+  function lip(x0, y0, x1, y1, dot) {
+    actx.globalCompositeOperation = 'source-over';
+    actx.beginPath();
+    if (dot) { actx.arc(x1, y1, actx.lineWidth / 2, 0, Math.PI * 2); actx.fill(); }
+    else { actx.moveTo(x0, y0); actx.lineTo(x1, y1); actx.stroke(); }
+  }
+
+  /* ============ Render loop (lapisan embun) ============ */
+  let breathing = false, breathStart = 0;
+
+  function render(now) {
+    requestAnimationFrame(render);
+    const W = fogCv.width, H = fogCv.height;
+
+    if (mode !== 'fog') { fctx.clearRect(0, 0, W, H); return; }   // Mode 2: 100% jernih
+    if (videoEl.readyState < 2) return;
+
+    // Video dibuat buram (downscale -> upscale) + tint putih keabuan
+    drawCover(sctx, smallC.width, smallC.height);
+    tctx.imageSmoothingEnabled = true; tctx.imageSmoothingQuality = 'high';
+    tctx.drawImage(smallC, 0, 0, W, H);
+    tctx.fillStyle = FOG_COLOR;
+    tctx.fillRect(0, 0, W, H);
+
+    // Embun hanya tampil di area yang belum dihapus
+    fctx.globalCompositeOperation = 'source-over';
+    fctx.clearRect(0, 0, W, H);
+    fctx.drawImage(tintC, 0, 0);
+    fctx.globalCompositeOperation = 'destination-in';
+    fctx.drawImage(maskC, 0, 0);
+    fctx.globalCompositeOperation = 'source-over';
+
+    // Uap napas: embun kembali perlahan (fade-in)
+    if (breathing) {
+      const p = Math.min(1, (now - breathStart) / BREATH_MS);
+      fctx.globalAlpha = p * p * (3 - 2 * p);
+      fctx.drawImage(tintC, 0, 0);
+      fctx.globalAlpha = 1;
+      if (p >= 1) { fillMask(); breathing = false; setStatus('Embun kembali. Silakan mengelap lagi'); }
+    }
+  }
+  requestAnimationFrame(render);
+
+  /* ============ Hands (hingga 2 tangan, mandiri) ============ */
+  let ready = false;
+
+  function onHands(res) {
+    if (!ready) { ready = true; hintEl.textContent = HINTS[mode]; setStatus('Siap'); }
+    const hands = res.multiHandLandmarks || [];
+    const labels = res.multiHandedness || [];
+    const seen = {};
+
+    hands.forEach((lm, i) => {
+      let key = (labels[i] && labels[i].label) || ('h' + i);
+      if (seen[key]) key += i;                      // hindari kunci ganda
+      seen[key] = true;
+
+      const idx = extended(lm, 8, 6), mid = extended(lm, 12, 10),
+            rng = extended(lm, 16, 14), pnk = extended(lm, 20, 18);
+      const drawing = idx && !mid && !rng && !pnk;  // hanya telunjuk
+      const raw = toXY(lm[8]);
+
+      const c = cursors[i];
+      if (c) {
+        c.style.left = (innerWidth - raw.x / dpr) + 'px';
+        c.style.top = (raw.y / dpr) + 'px';
+        c.classList.add('show');
+        c.classList.toggle('drawing', drawing);
+      }
+
+      if (!drawing) { delete prev[key]; return; }   // kepalan/gestur lain = pena terangkat
+
+      const last = prev[key];
+      const p = last ? { x: last.x + (raw.x - last.x) * SMOOTHING, y: last.y + (raw.y - last.y) * SMOOTHING } : raw;
+
+      if (mode === 'fog') erase(last ? last.x : p.x, last ? last.y : p.y, p.x, p.y);
+      else lip(last ? last.x : p.x, last ? last.y : p.y, p.x, p.y, !last);
+      prev[key] = p;
+    });
+
+    // Bersihkan tangan yang hilang
+    Object.keys(prev).forEach(k => { if (!seen[k]) delete prev[k]; });
+    for (let i = hands.length; i < cursors.length; i++) cursors[i].classList.remove('show', 'drawing');
+  }
+
+  /* ============ Face Mesh: sensor tiup (hanya Mode 1) ============ */
+  let puckerSince = 0, needRelease = false;
+
+  function onFace(res) {
+    if (mode !== 'fog' || breathing) { puckerSince = 0; return; }
+    if (!res.multiFaceLandmarks || !res.multiFaceLandmarks.length) { puckerSince = 0; needRelease = false; return; }
+    const f = res.multiFaceLandmarks[0];
+    const ratio = dist(f[61], f[291]) / dist(f[234], f[454]);   // lebar mulut / lebar wajah
+    if (ratio >= PUCKER_RATIO) { puckerSince = 0; needRelease = false; return; }
+    if (needRelease) return;
+
+    const now = performance.now();
+    if (!puckerSince) puckerSince = now;
+    const held = now - puckerSince;
+    if (held >= BLOW_HOLD_MS) {
+      breathing = true; breathStart = now; puckerSince = 0; needRelease = true;
+      setStatus('Meniup... embun kembali');
+    } else {
+      setStatus('Tahan manyun... ' + Math.round(held / BLOW_HOLD_MS * 100) + '%');
+    }
+  }
+
+  /* ============ Inisialisasi MediaPipe ============ */
+  const hands = new Hands({ locateFile: f => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${f}` });
+  hands.setOptions({ maxNumHands: 2, modelComplexity: 1, minDetectionConfidence: 0.6, minTrackingConfidence: 0.6 });
+  hands.onResults(onHands);
+
+  const faceMesh = new FaceMesh({ locateFile: f => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${f}` });
+  faceMesh.setOptions({ maxNumFaces: 1, refineLandmarks: false, minDetectionConfidence: 0.5, minTrackingConfidence: 0.5 });
+  faceMesh.onResults(onFace);
+
+  let frame = 0;
+  const camera = new Camera(videoEl, {
+    onFrame: async () => {
+      await hands.send({ image: videoEl });
+      if (mode === 'fog' && (++frame % 2) === 0) await faceMesh.send({ image: videoEl });
+    },
+    width: 1280, height: 720
+  });
+  camera.start().catch(e => {
+    console.error(e);
+    hintEl.textContent = 'Kamera tidak dapat diakses. Izinkan kamera lalu muat ulang halaman.';
+  });
+
+  /* ============ Navigasi mode ============ */
+  function setMode(m) {
+    mode = m;
+    prev = {};
+    document.body.classList.toggle('lipstick', m === 'lipstick');
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.mode === m));
+    hintEl.textContent = HINTS[m];
+    if (m === 'fog') {
+      fillMask(); breathing = false; puckerSince = 0;      // kaca berembun penuh lagi
+      setStatus('Mode Kaca Berembun');
+    } else {
+      breathing = false;
+      setStatus('Mode Lipstik (kaca jernih)');
+    }
+  }
+  document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => setMode(t.dataset.mode)));
+  document.body.classList.remove('lipstick');
+
+  /* ============ Hapus semua ============ */
+  $('clearBtn').addEventListener('click', () => {
+    actx.save(); actx.shadowBlur = 0;
+    actx.clearRect(0, 0, artCv.width, artCv.height);
+    actx.restore();
+    if (mode === 'fog') { fillMask(); breathing = false; }
+    prev = {};
+  });
+
+  /* ============ Snapshot & simpan otomatis ============ */
+  $('shutter').addEventListener('click', () => {
+    if (videoEl.readyState < 2) return;
+
+    flashEl.classList.remove('go'); void flashEl.offsetWidth; flashEl.classList.add('go');
+
+    const out = document.createElement('canvas');           // hidden canvas
+    out.width = artCv.width; out.height = artCv.height;
+    const o = out.getContext('2d');
+
+    o.save();
+    o.translate(out.width, 0); o.scale(-1, 1);              // mirror seperti di layar
+    const vw = videoEl.videoWidth || 640, vh = videoEl.videoHeight || 480;
+    const s = Math.max(out.width / vw, out.height / vh);
+    o.drawImage(videoEl, (out.width - vw * s) / 2, (out.height - vh * s) / 2, vw * s, vh * s);   // 1) video
+    if (mode === 'fog') o.drawImage(fogCv, 0, 0);            // 2) embun (jika Mode 1)
+    o.drawImage(artCv, 0, 0);                                // 3) coretan lipstik
+    o.restore();
+
+    const a = document.createElement('a');
+    a.href = out.toDataURL('image/png');
+    a.download = 'ai-magic-mirror-art.png';
+    document.body.appendChild(a); a.click(); a.remove();
+  });
+})();
+</script>
+</body>
+</html>
