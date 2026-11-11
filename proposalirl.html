@@ -1,0 +1,1730 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Proposal AI Magic Mirror | Kelas XI</title>
+
+<style>
+:root {
+  --red: #c92f3b;
+  --dark-red: #8f1f2c;
+  --pink: #f9e8e9;
+  --cream: #fffaf7;
+  --white: #ffffff;
+  --ink: #302a2d;
+  --muted: #786f74;
+  --line: #eee0e0;
+  --shadow: 0 15px 40px rgba(100, 35, 45, .07);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.8;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+/* NAVIGASI */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 250, 247, .95);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav-inner {
+  max-width: 1180px;
+  min-height: 76px;
+  margin: auto;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 14px;
+  line-height: 1.3;
+  font-weight: 800;
+}
+
+.brand-icon {
+  width: 43px;
+  height: 43px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: var(--red);
+  color: white;
+  font-size: 22px;
+}
+
+.brand small {
+  display: block;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-top: 5px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 17px;
+}
+
+.nav-links a {
+  color: #665c61;
+  font-weight: 650;
+  font-size: 12px;
+  transition: .2s;
+}
+
+.nav-links a:hover {
+  color: var(--red);
+}
+
+.menu-button {
+  display: none;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  background: white;
+  border-radius: 10px;
+  color: var(--dark-red);
+}
+
+/* HERO */
+
+.hero {
+  background:
+    radial-gradient(circle at 90% 15%, rgba(255,255,255,.9), transparent 32%),
+    linear-gradient(135deg, #f8e4e6, #fff8f3 65%, #f4e7e8);
+  padding: 85px 24px;
+  overflow: hidden;
+}
+
+.hero-inner {
+  max-width: 1080px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1.25fr .75fr;
+  align-items: center;
+  gap: 45px;
+}
+
+.eyebrow {
+  display: inline-block;
+  background: white;
+  color: var(--dark-red);
+  border: 1px solid #eed1d4;
+  border-radius: 30px;
+  padding: 7px 14px;
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(38px, 5.5vw, 65px);
+  line-height: 1.12;
+  letter-spacing: -1.5px;
+  margin: 24px 0 18px;
+}
+
+.hero h1 span {
+  color: var(--red);
+  font-style: italic;
+}
+
+.hero p {
+  color: #6f6268;
+  max-width: 590px;
+  font-size: 14px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 27px;
+}
+
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  padding: 12px 18px;
+  border: 1px solid transparent;
+  font-size: 12px;
+  font-weight: 750;
+  transition: .2s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: var(--red);
+  color: white;
+  box-shadow: 0 7px 18px rgba(201, 47, 59, .2);
+}
+
+.btn-secondary {
+  background: white;
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+/* ILUSTRASI CERMIN */
+
+.mirror-art {
+  min-height: 345px;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.mirror-frame {
+  width: 225px;
+  height: 295px;
+  padding: 10px;
+  border: 3px solid #d8b8b7;
+  border-radius: 115px 115px 38px 38px;
+  background: rgba(255,255,255,.7);
+  box-shadow: 0 25px 55px rgba(105, 42, 51, .15);
+  transform: rotate(4deg);
+}
+
+.mirror-inside {
+  height: 100%;
+  border-radius: 105px 105px 30px 30px;
+  border: 1px solid white;
+  background: linear-gradient(150deg, #fff 5%, #e9eaee 45%, #f9d9db);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mirror-inside .sparkle {
+  color: var(--red);
+  font-size: 49px;
+}
+
+.mirror-inside strong {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  color: var(--dark-red);
+}
+
+.mirror-inside small {
+  color: #85787e;
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
+.floating-note {
+  position: absolute;
+  right: 0;
+  bottom: 25px;
+  padding: 13px 15px;
+  background: white;
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  font-size: 12px;
+  font-weight: 800;
+  transform: rotate(-3deg);
+}
+
+.floating-note span {
+  display: block;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+/* STRUKTUR HALAMAN */
+
+.section {
+  max-width: 1050px;
+  margin: auto;
+  padding: 75px 24px;
+}
+
+.section-header {
+  margin-bottom: 30px;
+}
+
+.section-label {
+  color: var(--red);
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.section h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(28px, 4vw, 39px);
+  line-height: 1.25;
+  margin: 8px 0 12px;
+}
+
+.section-header > p {
+  max-width: 690px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.content-card {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: var(--shadow);
+}
+
+.content-card h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 21px;
+  margin-bottom: 12px;
+}
+
+.content-card h3:not(:first-child) {
+  margin-top: 27px;
+}
+
+.content-card p,
+.content-card li {
+  color: #655c61;
+  font-size: 13px;
+}
+
+.content-card p + p {
+  margin-top: 13px;
+}
+
+.content-card ul,
+.content-card ol {
+  padding-left: 23px;
+  margin-top: 10px;
+}
+
+.content-card li + li {
+  margin-top: 9px;
+}
+
+.soft-divider {
+  border: none;
+  border-top: 1px solid var(--line);
+  margin: 25px 0;
+}
+
+/* SAMPUL */
+
+.cover-card {
+  text-align: center;
+  padding: 45px 25px;
+  background: linear-gradient(145deg, #ffffff, #fff2f0);
+}
+
+.cover-icon {
+  font-size: 43px;
+  margin-bottom: 12px;
+}
+
+.cover-card h3 {
+  font-size: clamp(27px, 4vw, 34px);
+  color: var(--dark-red);
+  margin: 8px 0 0;
+}
+
+.cover-subtitle {
+  font-size: 17px !important;
+  color: var(--red) !important;
+  font-weight: 750;
+}
+
+.cover-description {
+  max-width: 580px;
+  margin: 15px auto 20px !important;
+}
+
+.school-name {
+  font-size: 14px !important;
+  color: var(--ink) !important;
+  font-weight: 800;
+  margin-top: 24px !important;
+}
+
+.authors {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.author {
+  background: white;
+  border: 1px solid #efd2d5;
+  border-radius: 30px;
+  padding: 8px 17px;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+/* GRID */
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 17px;
+}
+
+.info-card {
+  border: 1px solid var(--line);
+  background: white;
+  border-radius: 18px;
+  padding: 24px;
+  transition: .25s;
+}
+
+.info-card:hover,
+.feature:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+}
+
+.number {
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 1.3px;
+  color: var(--red);
+}
+
+.info-card h3 {
+  margin: 8px 0;
+  font-size: 16px;
+}
+
+.info-card p {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.goals {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+  margin-top: 18px;
+}
+
+.goal {
+  padding: 17px;
+  border: 1px solid #f1e4e2;
+  background: #fff7f5;
+  border-radius: 13px;
+  color: #685a60;
+  font-size: 12px;
+}
+
+.goal strong {
+  display: block;
+  color: var(--dark-red);
+  margin-bottom: 5px;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.feature {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  padding: 22px 19px;
+  transition: .25s;
+}
+
+.feature-icon {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  background: var(--pink);
+  border-radius: 13px;
+  font-size: 21px;
+  margin-bottom: 14px;
+}
+
+.feature h3 {
+  font-size: 14px;
+  margin-bottom: 7px;
+}
+
+.feature p {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* TABEL */
+
+.table-wrap {
+  overflow-x: auto;
+  border-radius: 15px;
+  border: 1px solid var(--line);
+  background: white;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 540px;
+  font-size: 12px;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+th {
+  background: #fff0ef;
+  color: var(--dark-red);
+  font-size: 11px;
+}
+
+td {
+  color: #645a60;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+.note {
+  margin-top: 14px;
+  padding: 13px 16px;
+  color: #75646a;
+  background: #fff4f1;
+  border-left: 3px solid var(--red);
+  border-radius: 0 10px 10px 0;
+  font-size: 11px;
+}
+
+/* PENUTUP */
+
+.closing {
+  padding: 65px 24px;
+  color: white;
+  background: linear-gradient(135deg, #861c2a, #c92f3b);
+}
+
+.closing-inner {
+  max-width: 950px;
+  margin: auto;
+}
+
+.closing h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 36px;
+  margin: 12px 0 16px;
+}
+
+.closing p {
+  max-width: 780px;
+  font-size: 13px;
+  color: #ffeaec;
+}
+
+.closing p + p {
+  margin-top: 14px;
+}
+
+.closing .eyebrow {
+  color: var(--dark-red);
+}
+
+.signature {
+  display: flex;
+  gap: 11px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+
+.signature span {
+  border: 1px solid rgba(255,255,255,.25);
+  background: rgba(255,255,255,.12);
+  border-radius: 12px;
+  padding: 10px 17px;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+footer {
+  text-align: center;
+  padding: 24px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.back-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 43px;
+  height: 43px;
+  border: none;
+  border-radius: 50%;
+  background: var(--red);
+  color: white;
+  font-size: 20px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.14);
+  z-index: 80;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 850px) {
+  .nav-links {
+    gap: 10px;
+  }
+
+  .nav-links a {
+    font-size: 10px;
+  }
+
+  .hero-inner {
+    gap: 20px;
+  }
+
+  .mirror-frame {
+    width: 190px;
+    height: 260px;
+  }
+
+  .feature-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 650px) {
+  .nav-inner {
+    flex-wrap: wrap;
+    padding: 12px 18px;
+  }
+
+  .menu-button {
+    display: block;
+  }
+
+  .nav-links {
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding-top: 5px;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links a {
+    padding: 9px 4px;
+    border-top: 1px solid var(--line);
+    font-size: 12px;
+  }
+
+  .hero {
+    padding: 52px 20px 40px;
+  }
+
+  .hero-inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .hero p {
+    margin: auto;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .mirror-art {
+    min-height: 300px;
+    margin-top: 10px;
+  }
+
+  .floating-note {
+    right: 3%;
+  }
+
+  .section {
+    padding: 52px 18px;
+  }
+
+  .content-card {
+    padding: 23px 18px;
+  }
+
+  .info-grid,
+  .goals,
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .closing {
+    padding: 50px 20px;
+  }
+
+  .closing h2 {
+    font-size: 30px;
+  }
+}
+
+/* MODE CETAK DAN PDF */
+
+@media print {
+  .navbar,
+  .hero-buttons,
+  .back-top,
+  .menu-button {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+
+  .hero {
+    padding: 30px 10px;
+  }
+
+  .hero-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .mirror-art {
+    display: none;
+  }
+
+  .section {
+    padding: 25px 10px;
+  }
+
+  .content-card,
+  .info-card,
+  .feature {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+
+  .closing {
+    padding: 30px 10px;
+    background: white;
+    color: black;
+  }
+
+  .closing p {
+    color: #333;
+  }
+
+  .signature span {
+    color: black;
+    border: 1px solid #ccc;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     NAVIGASI WEBSITE
+========================= -->
+
+<nav class="navbar">
+  <div class="nav-inner">
+
+    <a href="#beranda" class="brand">
+      <span class="brand-icon">✦</span>
+      <span>
+        AI MAGIC MIRROR
+        <small>PROJECT PROPOSAL</small>
+      </span>
+    </a>
+
+    <button
+      class="menu-button"
+      id="menuButton"
+      aria-expanded="false"
+      aria-controls="navLinks">
+      ☰ Menu
+    </button>
+
+    <div class="nav-links" id="navLinks">
+      <a href="#sampul">Sampul</a>
+      <a href="#kata-pengantar">Kata Pengantar</a>
+      <a href="#pendahuluan">Pendahuluan</a>
+      <a href="#tujuan">Tujuan</a>
+      <a href="#konsep">Konsep Proyek</a>
+      <a href="#pelaksanaan">Pelaksanaan</a>
+      <a href="#jadwal">Jadwal</a>
+      <a href="#tim">Tim</a>
+      <a href="#penutup">Penutup</a>
+    </div>
+
+  </div>
+</nav>
+
+<!-- =========================
+     BERANDA
+========================= -->
+
+<header class="hero" id="beranda">
+  <div class="hero-inner">
+
+    <div>
+      <span class="eyebrow">Proposal Proyek Teknologi</span>
+
+      <h1>
+        AI Magic Mirror:<br>
+        <span>Fog & Lipstick</span><br>
+        Edition
+      </h1>
+
+      <p>
+        Proposal pengembangan aplikasi web interaktif yang memanfaatkan
+        teknologi pelacakan tangan, deteksi wajah, dan kamera untuk
+        menghadirkan pengalaman kreatif melalui cermin digital.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="#sampul" class="btn btn-primary">
+          Baca Proposal ↗
+        </a>
+
+        <button
+          class="btn btn-secondary"
+          onclick="window.print()">
+          Cetak / Simpan PDF
+        </button>
+      </div>
+    </div>
+
+    <div class="mirror-art">
+      <div class="mirror-frame">
+        <div class="mirror-inside">
+          <span class="sparkle">✧</span>
+          <strong>Magic Mirror</strong>
+          <small>INTERACTIVE ART</small>
+          <span style="font-size:27px">♡</span>
+        </div>
+      </div>
+
+      <div class="floating-note">
+        ✨ Gesture Technology
+        <span>Creative digital experience</span>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<!-- =========================
+     SAMPUL PROPOSAL
+========================= -->
+
+<section class="section" id="sampul">
+
+  <div class="section-header">
+    <span class="section-label">01 / Identitas Proposal</span>
+    <h2>Halaman Sampul</h2>
+    <p>Identitas penyusun dan informasi proyek yang diusulkan.</p>
+  </div>
+
+  <div class="content-card cover-card">
+
+    <div class="cover-icon">🪞</div>
+
+    <span class="section-label">PROPOSAL PROYEK</span>
+
+    <h3>AI Magic Mirror</h3>
+
+    <p class="cover-subtitle">
+      Fog & Lipstick Edition
+    </p>
+
+    <p class="cover-description">
+      Pengembangan Aplikasi Web Interaktif Berbasis Pelacakan
+      Gestur Tangan dan Teknologi Kamera.
+    </p>
+
+    <hr class="soft-divider">
+
+    <p class="school-name">
+      SMA BPK Penabur Holis Bandung
+    </p>
+
+    <p style="font-size:13px;font-weight:650">
+      Kelas XI (11)
+    </p>
+
+    <p style="font-size:12px;margin-top:7px">
+      Bidang Teknologi Informasi dan Kreativitas Digital
+    </p>
+
+    <p style="font-size:12px">
+      Tahun penyusunan: 2026
+    </p>
+
+    <div class="authors">
+      <span class="author">Janet</span>
+      <span class="author">Maureen</span>
+      <span class="author">Naomi</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================
+     KATA PENGANTAR
+========================= -->
+
+<section class="section" id="kata-pengantar">
+
+  <div class="section-header">
+    <span class="section-label">02 / Pengantar</span>
+    <h2>Kata Pengantar</h2>
+  </div>
+
+  <div class="content-card">
+
+    <p>
+      Puji syukur kami panjatkan kepada Tuhan Yang Maha Esa karena
+      atas rahmat dan karunia-Nya, proposal proyek yang berjudul
+      <strong>“AI Magic Mirror: Fog & Lipstick Edition”</strong>
+      ini dapat disusun dengan baik sebagai perencanaan pengembangan
+      aplikasi web interaktif berbasis teknologi digital.
+    </p>
+
+    <p>
+      Proyek ini dirancang untuk menggabungkan teknologi kamera,
+      pelacakan tangan, dan pengenalan gestur agar pengguna dapat
+      berinteraksi dengan layar melalui gerakan tangan. Melalui dua
+      mode utama, yaitu Kaca Berembun dan Lipstik Merah, aplikasi ini
+      diharapkan dapat menjadi sarana pembelajaran teknologi sekaligus
+      media kreativitas digital yang menarik.
+    </p>
+
+    <p>
+      Penyusunan proposal ini juga bertujuan untuk memberikan gambaran
+      mengenai latar belakang, rumusan masalah, tujuan, manfaat,
+      konsep, dan tahapan pelaksanaan proyek. Dengan adanya proposal
+      ini, proses pengembangan diharapkan dapat berjalan lebih terarah
+      dan sesuai dengan tujuan yang telah ditentukan.
+    </p>
+
+    <p>
+      Kami menyadari bahwa proposal ini masih memiliki kekurangan.
+      Oleh karena itu, kami mengharapkan saran dan masukan yang
+      membangun agar perencanaan proyek ini dapat menjadi lebih baik.
+      Semoga proyek ini dapat memberikan manfaat serta menambah
+      pengetahuan dan pengalaman bagi kami.
+    </p>
+
+    <p style="margin-top:25px">
+      Hormat kami,
+    </p>
+
+    <p style="font-weight:800;color:#8f1f2c">
+      Janet, Maureen, dan Naomi
+    </p>
+
+    <p style="font-size:12px;margin-top:4px">
+      Kelas XI — SMA BPK Penabur Holis Bandung
+    </p>
+
+  </div>
+</section>
+
+<!-- =========================
+     BAB I: PENDAHULUAN
+========================= -->
+
+<section class="section" id="pendahuluan">
+
+  <div class="section-header">
+    <span class="section-label">03 / Bab I</span>
+    <h2>Pendahuluan</h2>
+    <p>Latar belakang, rumusan masalah, dan batasan proyek.</p>
+  </div>
+
+  <div class="content-card">
+
+    <h3>1.1 Latar Belakang</h3>
+
+    <p>
+      Perkembangan teknologi informasi telah memungkinkan manusia
+      berinteraksi dengan perangkat digital melalui berbagai cara.
+      Interaksi yang sebelumnya banyak bergantung pada keyboard dan
+      mouse kini dapat dikembangkan dengan bantuan kamera, gerakan
+      tubuh, dan teknologi pengenalan gestur. Perkembangan tersebut
+      membuka peluang untuk menciptakan aplikasi yang lebih interaktif,
+      kreatif, dan menarik.
+    </p>
+
+    <p>
+      Salah satu penerapannya adalah cermin digital interaktif yang
+      menampilkan gambar pengguna melalui webcam dan memungkinkan
+      pengguna memberikan efek visual pada layar. Konsep ini dapat
+      dikembangkan dengan menggabungkan simulasi embun, coretan merah
+      menyerupai lipstik, serta kendali menggunakan gerakan jari.
+    </p>
+
+    <p>
+      Berdasarkan gagasan tersebut, kami mengusulkan proyek
+      <strong>AI Magic Mirror: Fog & Lipstick Edition</strong>,
+      yaitu aplikasi web yang dirancang menggunakan HTML, CSS,
+      JavaScript, dan library MediaPipe. Aplikasi ini direncanakan
+      memiliki dua mode visual serta kemampuan untuk mengenali
+      gerakan tangan dan indikator bentuk mulut melalui kamera.
+    </p>
+
+    <p>
+      Melalui proyek ini, kami ingin mempelajari penerapan pemrograman
+      web dan teknologi computer vision dalam menghasilkan pengalaman
+      digital yang kreatif serta mudah dipahami oleh pengguna.
+    </p>
+
+    <hr class="soft-divider">
+
+    <h3>1.2 Rumusan Masalah</h3>
+
+    <p>Rumusan masalah dalam proyek ini adalah sebagai berikut:</p>
+
+    <ol>
+      <li>
+        Bagaimana merancang aplikasi web cermin digital yang interaktif
+        dan mudah digunakan?
+      </li>
+      <li>
+        Bagaimana memanfaatkan teknologi pelacakan tangan untuk
+        mengendalikan aktivitas menggambar pada layar?
+      </li>
+      <li>
+        Bagaimana menerapkan dua mode visual, yaitu Kaca Berembun
+        dan Lipstik Merah?
+      </li>
+      <li>
+        Bagaimana menggabungkan tampilan kamera dan hasil karya
+        pengguna menjadi sebuah foto digital?
+      </li>
+      <li>
+        Bagaimana membuat aplikasi yang memiliki tampilan menarik
+        dan dapat dijalankan melalui browser?
+      </li>
+    </ol>
+
+    <hr class="soft-divider">
+
+    <h3>1.3 Batasan Masalah</h3>
+
+    <p>
+      Agar pengembangan lebih terarah dan sesuai dengan kemampuan
+      serta waktu yang tersedia, proyek ini memiliki batasan berikut:
+    </p>
+
+    <ul>
+      <li>
+        Aplikasi dibuat dalam bentuk website menggunakan HTML,
+        CSS, dan JavaScript.
+      </li>
+      <li>
+        Kamera digunakan sebagai sumber tampilan video pengguna.
+      </li>
+      <li>
+        Sistem dirancang untuk melacak maksimal dua tangan secara
+        bersamaan menggunakan MediaPipe Hands.
+      </li>
+      <li>
+        MediaPipe Face Mesh digunakan untuk membantu mengenali
+        indikator perubahan bentuk mulut.
+      </li>
+      <li>
+        Aplikasi memiliki dua mode utama, yaitu Fog Mirror dan
+        Lipstick Clear Mirror.
+      </li>
+      <li>
+        Aplikasi menyediakan fitur penghapusan coretan dan
+        pengunduhan foto dalam format PNG.
+      </li>
+    </ul>
+
+  </div>
+</section>
+
+<!-- =========================
+     BAB II: TUJUAN DAN MANFAAT
+========================= -->
+
+<section class="section" id="tujuan">
+
+  <div class="section-header">
+    <span class="section-label">04 / Bab II</span>
+    <h2>Tujuan dan Manfaat</h2>
+    <p>Hal yang ingin dicapai melalui pengembangan proyek.</p>
+  </div>
+
+  <div class="section-header">
+    <h2 style="font-size:25px">2.1 Tujuan Proyek</h2>
+  </div>
+
+  <div class="info-grid">
+
+    <div class="info-card">
+      <span class="number">TUJUAN 01</span>
+      <h3>Mengembangkan Aplikasi Interaktif</h3>
+      <p>
+        Merancang cermin digital yang dapat dikendalikan menggunakan
+        gerakan tangan tanpa harus menyentuh layar.
+      </p>
+    </div>
+
+    <div class="info-card">
+      <span class="number">TUJUAN 02</span>
+      <h3>Mempelajari Teknologi Web</h3>
+      <p>
+        Menerapkan HTML, CSS, JavaScript, Canvas API, dan MediaPipe
+        dalam sebuah proyek yang terpadu.
+      </p>
+    </div>
+
+    <div class="info-card">
+      <span class="number">TUJUAN 03</span>
+      <h3>Mengembangkan Kreativitas</h3>
+      <p>
+        Menyediakan media untuk bereksperimen dengan efek visual
+        dan menghasilkan karya digital.
+      </p>
+    </div>
+
+    <div class="info-card">
+      <span class="number">TUJUAN 04</span>
+      <h3>Melatih Kerja Sama Tim</h3>
+      <p>
+        Meningkatkan kemampuan membagi tugas, berkomunikasi,
+        memecahkan masalah, dan mengevaluasi hasil kerja.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="section-header" style="margin-top:38px">
+    <h2 style="font-size:25px">2.2 Manfaat Proyek</h2>
+  </div>
+
+  <div class="content-card">
+
+    <div class="goals">
+
+      <div class="goal">
+        <strong>📚 Manfaat Edukatif</strong>
+        Menambah pengetahuan mengenai pemrograman web, computer vision,
+        dan pengolahan visual digital.
+      </div>
+
+      <div class="goal">
+        <strong>🎨 Manfaat Kreatif</strong>
+        Memberikan sarana untuk bereksperimen dengan coretan dan
+        tampilan visual secara interaktif.
+      </div>
+
+      <div class="goal">
+        <strong>💻 Manfaat Teknologis</strong>
+        Mengenalkan penerapan teknologi pengenalan gestur dalam
+        sebuah aplikasi berbasis browser.
+      </div>
+
+      <div class="goal">
+        <strong>🤝 Manfaat Kolaboratif</strong>
+        Melatih kerja sama, pembagian tanggung jawab, dan pemecahan
+        masalah selama pengerjaan proyek.
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     BAB III: KONSEP PROYEK
+========================= -->
+
+<section class="section" id="konsep">
+
+  <div class="section-header">
+    <span class="section-label">05 / Bab III</span>
+    <h2>Deskripsi dan Konsep Proyek</h2>
+    <p>Gambaran sistem, fitur utama, dan teknologi yang direncanakan.</p>
+  </div>
+
+  <div class="content-card">
+
+    <h3>3.1 Deskripsi Proyek</h3>
+
+    <p>
+      AI Magic Mirror: Fog & Lipstick Edition merupakan rancangan
+      aplikasi web interaktif yang menampilkan video pengguna melalui
+      webcam. Pengguna dapat memilih mode visual dan menggunakan
+      gerakan tangan untuk mengubah tampilan kanvas. Aplikasi
+      dirancang dengan antarmuka yang sederhana, menarik, dan
+      responsif agar nyaman digunakan melalui komputer atau laptop.
+    </p>
+
+    <p>
+      Istilah AI dalam nama proyek mengacu pada penggunaan teknologi
+      computer vision untuk mendeteksi titik-titik tangan dan wajah.
+      Aplikasi ini berfokus pada interaksi visual, bukan pada chatbot
+      atau pembuatan konten menggunakan kecerdasan buatan generatif.
+    </p>
+
+    <hr class="soft-divider">
+
+    <h3>3.2 Fitur Utama</h3>
+
+  </div>
+
+  <div class="feature-grid">
+
+    <div class="feature">
+      <div class="feature-icon">🌫️</div>
+      <h3>Mode 1: Fog Mirror</h3>
+      <p>
+        Layar diberi lapisan embun semi-transparan. Gerakan telunjuk
+        digunakan untuk menghapus embun secara virtual sehingga
+        tampilan kamera terlihat lebih jelas.
+      </p>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">💄</div>
+      <h3>Mode 2: Lipstick</h3>
+      <p>
+        Layar ditampilkan dengan jelas. Gerakan telunjuk menghasilkan
+        goresan berwarna merah dengan efek bayangan yang menyerupai
+        lipstik di atas kaca.
+      </p>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">🖐️</div>
+      <h3>Multi-Hand Tracking</h3>
+      <p>
+        Sistem dirancang untuk mendeteksi hingga dua tangan secara
+        bersamaan dan memproses status gestur masing-masing tangan.
+      </p>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">👄</div>
+      <h3>Deteksi Gerakan Mulut</h3>
+      <p>
+        Face Mesh membantu memperkirakan bentuk mulut mengerucut.
+        Jika terdeteksi secara konsisten, efek embun dapat dimunculkan
+        kembali pada mode Fog.
+      </p>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">📸</div>
+      <h3>Snapshot Digital</h3>
+      <p>
+        Foto menggabungkan frame kamera dan lapisan gambar sehingga
+        hasil karya dapat diunduh dalam format PNG.
+      </p>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">🧹</div>
+      <h3>Kontrol Kanvas</h3>
+      <p>
+        Tombol hapus semua digunakan untuk membersihkan coretan,
+        sedangkan navigasi mode memungkinkan pengguna berpindah
+        antara Fog Mirror dan Lipstick.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="content-card" style="margin-top:22px">
+
+    <h3>3.3 Teknologi yang Digunakan</h3>
+
+    <ul>
+      <li>
+        <strong>HTML5:</strong> menyusun struktur halaman aplikasi.
+      </li>
+      <li>
+        <strong>CSS3:</strong> mengatur tata letak, warna, responsivitas,
+        dan animasi visual.
+      </li>
+      <li>
+        <strong>JavaScript:</strong> mengatur interaksi pengguna,
+        logika gestur, pengolahan kanvas, dan penyimpanan foto.
+      </li>
+      <li>
+        <strong>MediaPipe Hands:</strong> mendeteksi titik-titik penting
+        pada maksimal dua tangan.
+      </li>
+      <li>
+        <strong>MediaPipe Face Mesh:</strong> membantu menganalisis
+        landmark wajah dan indikator bentuk mulut.
+      </li>
+      <li>
+        <strong>MediaPipe Camera Utils:</strong> mendukung pengambilan
+        frame dari webcam.
+      </li>
+      <li>
+        <strong>Canvas API:</strong> membuat efek visual, coretan,
+        penghapusan embun, dan penggabungan foto.
+      </li>
+    </ul>
+
+    <div class="note">
+      Catatan teknis: penggunaan webcam memerlukan izin pengguna dan
+      umumnya membutuhkan konteks aman seperti HTTPS atau localhost.
+      Pengenalan mulut mengerucut merupakan perkiraan berdasarkan
+      landmark yang perlu diuji dan dikalibrasi. Akurasi sistem
+      dipengaruhi pencahayaan, posisi pengguna, dan performa perangkat.
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================
+     BAB IV: PELAKSANAAN
+========================= -->
+
+<section class="section" id="pelaksanaan">
+
+  <div class="section-header">
+    <span class="section-label">06 / Bab IV</span>
+    <h2>Metode Pelaksanaan</h2>
+    <p>Tahapan yang direncanakan dari persiapan hingga evaluasi.</p>
+  </div>
+
+  <div class="content-card">
+
+    <h3>4.1 Metode Pengembangan</h3>
+
+    <p>
+      Pengembangan proyek dilakukan secara bertahap, dimulai dari
+      analisis kebutuhan, perancangan tampilan, pembuatan fitur,
+      integrasi teknologi, hingga pengujian. Setiap bagian diperiksa
+      sebelum digabungkan menjadi satu aplikasi agar kesalahan dapat
+      ditemukan dan diperbaiki lebih awal.
+    </p>
+
+    <hr class="soft-divider">
+
+    <h3>4.2 Tahapan Pelaksanaan</h3>
+
+    <ol>
+      <li>
+        <strong>Analisis kebutuhan.</strong>
+        Menentukan tujuan, fitur, kebutuhan perangkat, dan rancangan
+        awal aplikasi.
+      </li>
+      <li>
+        <strong>Perancangan antarmuka.</strong>
+        Menyusun tampilan aplikasi, tombol navigasi mode, instruksi,
+        tombol kamera, dan tombol hapus.
+      </li>
+      <li>
+        <strong>Pengembangan efek visual.</strong>
+        Membuat lapisan embun, goresan merah, animasi, dan komposisi
+        foto menggunakan Canvas API.
+      </li>
+      <li>
+        <strong>Integrasi teknologi kamera.</strong>
+        Menghubungkan webcam dengan MediaPipe Hands dan Face Mesh
+        serta mengatur pemrosesan gerakan tangan.
+      </li>
+      <li>
+        <strong>Pengujian fitur.</strong>
+        Memeriksa fungsi kedua mode, interaksi dua tangan, responsivitas,
+        izin kamera, dan pengunduhan foto.
+      </li>
+      <li>
+        <strong>Evaluasi dan dokumentasi.</strong>
+        Memperbaiki kekurangan, mencatat hasil pengujian, dan menyusun
+        dokumentasi proyek.
+      </li>
+    </ol>
+
+    <hr class="soft-divider">
+
+    <h3>4.3 Kebutuhan Perangkat</h3>
+
+    <ul>
+      <li>Laptop atau komputer dengan browser modern.</li>
+      <li>Webcam internal atau eksternal.</li>
+      <li>Koneksi internet untuk memuat library CDN.</li>
+      <li>Editor kode seperti Notepad atau Visual Studio Code.</li>
+      <li>Browser yang mendukung JavaScript dan Canvas API.</li>
+    </ul>
+
+    <hr class="soft-divider">
+
+    <h3>4.4 Rencana Pengujian</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Aspek</th>
+            <th>Pengujian</th>
+            <th>Indikator Keberhasilan</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Kamera</td>
+            <td>Mengaktifkan webcam</td>
+            <td>Video tampil setelah izin diberikan</td>
+          </tr>
+
+          <tr>
+            <td>Pelacakan tangan</td>
+            <td>Menggerakkan satu dan dua tangan</td>
+            <td>Titik tangan dapat dideteksi secara terpisah</td>
+          </tr>
+
+          <tr>
+            <td>Gestur tangan</td>
+            <td>Mengangkat telunjuk dan mengepalkan tangan</td>
+            <td>Aktivitas menggambar mengikuti status gestur</td>
+          </tr>
+
+          <tr>
+            <td>Mode Fog</td>
+            <td>Menghapus dan memunculkan kembali embun</td>
+            <td>Lapisan embun berubah sesuai interaksi</td>
+          </tr>
+
+          <tr>
+            <td>Mode Lipstick</td>
+            <td>Membuat goresan pada kanvas</td>
+            <td>Goresan merah tampil dengan efek visual</td>
+          </tr>
+
+          <tr>
+            <td>Snapshot</td>
+            <td>Menyimpan hasil foto</td>
+            <td>File PNG berhasil diunduh dan dibuka</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================
+     JADWAL KEGIATAN
+========================= -->
+
+<section class="section" id="jadwal">
+
+  <div class="section-header">
+    <span class="section-label">07 / Rencana Waktu</span>
+    <h2>Jadwal Kegiatan</h2>
+    <p>Contoh rencana pelaksanaan proyek selama empat minggu.</p>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Kegiatan</th>
+          <th>Minggu 1</th>
+          <th>Minggu 2</th>
+          <th>Minggu 3</th>
+          <th>Minggu 4</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>Analisis kebutuhan dan perencanaan</td>
+          <td>✓</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+        </tr>
+
+        <tr>
+          <td>Desain antarmuka</td>
+          <td>✓</td>
+          <td>✓</td>
+          <td>—</td>
+          <td>—</td>
+        </tr>
+
+        <tr>
+          <td>Pengembangan fitur utama</td>
+          <td>—</td>
+          <td>✓</td>
+          <td>✓</td>
+          <td>—</td>
+        </tr>
+
+        <tr>
+          <td>Integrasi dan pengujian</td>
+          <td>—</td>
+          <td>—</td>
+          <td>✓</td>
+          <td>✓</td>
+        </tr>
+
+        <tr>
+          <td>Evaluasi dan dokumentasi</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>✓</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    Jadwal tersebut merupakan contoh perencanaan awal. Waktu
+    pelaksanaan dapat disesuaikan dengan kesepakatan kelompok
+    dan ketentuan sekolah.
+  </div>
+
+</section>
+
+<!-- =========================
+     PEMBAGIAN TUGAS
+========================= -->
+
+<section class="section" id="tim">
+
+  <div class="section-header">
+    <span class="section-label">08 / Kerja Sama</span>
+    <h2>Pembagian Tugas Tim</h2>
+    <p>Contoh pembagian tanggung jawab untuk mendukung pelaksanaan proyek.</p>
+  </div>
+
+  <div class="info-grid">
+
+    <div class="info-card">
+      <span class="number">ANGGOTA 01</span>
+      <h3>Janet</h3>
+      <p>
+        Bertanggung jawab dalam perencanaan proyek, perumusan kebutuhan,
+        penyusunan struktur proposal, dan dokumentasi perkembangan proyek.
+      </p>
+    </div>
+
+    <div class="info-card">
+      <span class="number">ANGGOTA 02</span>
+      <h3>Maureen</h3>
+      <p>
+        Bertanggung jawab pada perancangan antarmuka, pemilihan warna,
+        tata letak, dan desain pengalaman pengguna agar aplikasi
+        terlihat menarik serta mudah digunakan.
+      </p>
+    </div>
+
+    <div class="info-card" style="grid-column:1/-1">
+      <span class="number">ANGGOTA 03</span>
+      <h3>Naomi</h3>
+      <p>
+        Bertanggung jawab dalam perencanaan implementasi fitur,
+        integrasi komponen JavaScript, pengujian interaksi,
+        serta evaluasi fungsi aplikasi.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="note">
+    Pembagian tugas tersebut merupakan usulan awal yang dapat
+    disesuaikan dengan kesepakatan kelompok. Seluruh anggota
+    diharapkan tetap bekerja sama dalam proses pengembangan,
+    pengujian, dan evaluasi.
+  </div>
+
+</section>
+
+<!-- =========================
+     BAB V: PENUTUP
+========================= -->
+
+<section class="closing" id="penutup">
+
+  <div class="closing-inner">
+
+    <span class="eyebrow">09 / Bagian Akhir</span>
+
+    <h2>Penutup</h2>
+
+    <p>
+      Demikian proposal proyek AI Magic Mirror: Fog & Lipstick Edition
+      ini kami susun sebagai pedoman awal dalam merancang dan
+      mengembangkan aplikasi web interaktif berbasis teknologi
+      computer vision. Melalui proyek ini, kami berharap dapat
+      meningkatkan pemahaman mengenai pemrograman web, pengolahan
+      visual, dan penerapan teknologi dalam menciptakan pengalaman
+      digital yang kreatif.
+    </p>
+
+    <p>
+      Kami menyadari bahwa pelaksanaan proyek ini memerlukan
+      perencanaan, kerja sama, pengujian, serta evaluasi yang baik.
+      Oleh karena itu, kami mengharapkan dukungan dan masukan yang
+      membangun agar proyek ini dapat dikembangkan sesuai dengan
+      tujuan yang telah direncanakan.
+    </p>
+
+    <p>
+      Semoga proyek ini dapat memberikan manfaat, menjadi sarana
+      pembelajaran yang berharga, serta melatih kreativitas dan
+      kemampuan bekerja sama bagi kami sebagai siswa kelas XI
+      SMA BPK Penabur Holis Bandung.
+    </p>
+
+    <p style="margin-top:25px;font-weight:750">
+      Disusun oleh:
+    </p>
+
+    <div class="signature">
+      <span>Janet</span>
+      <span>Maureen</span>
+      <span>Naomi</span>
+    </div>
+
+    <p style="margin-top:20px;font-size:12px">
+      Kelas XI — SMA BPK Penabur Holis Bandung
+    </p>
+
+  </div>
+
+</section>
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+  <p><strong>AI Magic Mirror: Fog & Lipstick Edition</strong></p>
+  <p>Proposal Proyek Teknologi · Kelas XI</p>
+  <p>SMA BPK Penabur Holis Bandung · 2026</p>
+</footer>
+
+<button
+  class="back-top"
+  id="backTop"
+  aria-label="Kembali ke atas"
+  title="Kembali ke atas">
+  ↑
+</button>
+
+<!-- =========================
+     JAVASCRIPT NAVIGASI
+========================= -->
+
+<script>
+const menuButton = document.getElementById("menuButton");
+const navLinks = document.getElementById("navLinks");
+const backTop = document.getElementById("backTop");
+
+// Membuka dan menutup menu pada layar kecil
+menuButton.addEventListener("click", function () {
+  const isOpen = navLinks.classList.toggle("open");
+
+  menuButton.setAttribute(
+    "aria-expanded",
+    String(isOpen)
+  );
+
+  menuButton.textContent = isOpen ? "✕ Tutup" : "☰ Menu";
+});
+
+// Menutup menu setelah salah satu navigasi dipilih
+navLinks.querySelectorAll("a").forEach(function (link) {
+  link.addEventListener("click", function () {
+    navLinks.classList.remove("open");
+    menuButton.setAttribute("aria-expanded", "false");
+    menuButton.textContent = "☰ Menu";
+  });
+});
+
+// Tombol kembali ke bagian atas
+backTop.addEventListener("click", function () {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+});
+</script>
+
+</body>
+</html>
