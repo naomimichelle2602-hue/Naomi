@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NMJ Digital Archive</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
+:root {
+  --pink:#f6dce8;
+  --pink-dark:#bd789b;
+  --lavender:#e9e1f7;
+  --blue:#e1eff8;
+  --yellow:#fff1cd;
+  --cream:#fffaf6;
+  --text:#69566b;
+}
+
+* {box-sizing:border-box}
+
+body {
+  margin:0;
+  font-family:'DM Sans',sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 10% 10%,#f9e2ed,transparent 30%),
+    radial-gradient(circle at 90% 20%,#e9e1f7,transparent 30%),
+    linear-gradient(135deg,#fffaf5,#f9edf5,#edf4fb);
+  min-height:100vh;
+}
+
+header {
+  padding:23px 7%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:15px;
+}
+
+.logo {
+  font-family:'Playfair Display',serif;
+  font-size:25px;
+  color:#bd789b;
+  font-weight:bold;
+}
+
+.hero {
+  text-align:center;
+  padding:75px 20px 55px;
+}
+
+.eyebrow {
+  color:#c28baa;
+  letter-spacing:5px;
+  font-size:11px;
+  font-weight:bold;
+}
+
+.hero h1 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(40px,7vw,75px);
+  color:#bb7e9d;
+  margin:20px 0 10px;
+}
+
+.hero h2 {
+  font-family:'Playfair Display',serif;
+  font-size:19px;
+  color:#a88da9;
+  font-weight:500;
+}
+
+.hero p {
+  font-size:14px;
+  line-height:1.9;
+  max-width:570px;
+  margin:20px auto;
+  color:#89778a;
+}
+
+.decor {
+  font-size:25px;
+  margin-top:25px;
+}
+
+.divider {
+  width:80px;
+  height:3px;
+  background:#edc8dc;
+  border-radius:10px;
+  margin:30px auto;
+}
+
+.section-title {
+  text-align:center;
+  font-family:'Playfair Display',serif;
+  font-size:32px;
+  color:#ae7898;
+  margin:25px 0 10px;
+}
+
+.section-sub {
+  text-align:center;
+  font-size:13px;
+  color:#98889a;
+  margin-bottom:35px;
+  padding:0 15px;
+}
+
+.projects {
+  width:88%;
+  max-width:1100px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:22px;
+}
+
+.project {
+  text-align:left;
+  border:1px solid white;
+  border-radius:24px;
+  padding:25px;
+  background:#ffffffc9;
+  box-shadow:0 8px 25px #b69bb51a;
+  transition:.3s;
+  color:var(--text);
+  cursor:pointer;
+  width:100%;
+}
+
+.project:hover {
+  transform:translateY(-7px);
+  box-shadow:0 14px 30px #b69bb533;
+}
+
+.project .emoji {
+  font-size:38px;
+  margin-bottom:17px;
+}
+
+.project h3 {
+  font-family:'Playfair Display',serif;
+  font-size:21px;
+  margin:0 0 9px;
+}
+
+.project p {
+  font-size:12px;
+  line-height:1.8;
+  color:#968598;
+  min-height:42px;
+}
+
+.open {
+  display:inline-block;
+  margin-top:12px;
+  font-size:12px;
+  color:#c17b9d;
+  font-weight:bold;
+}
+
+.pink {border-bottom:4px solid #f2c8dc}
+.blue {border-bottom:4px solid #c9e2f2}
+.lavender {border-bottom:4px solid #d9cef0}
+.yellow {border-bottom:4px solid #f5e2a9}
+
+.viewer {
+  display:none;
+  width:92%;
+  max-width:1250px;
+  margin:60px auto;
+  background:white;
+  padding:15px;
+  border-radius:22px;
+  box-shadow:0 12px 40px #aa91aa22;
+  scroll-margin-top:20px;
+}
+
+.viewer.active {display:block}
+
+.viewer-top {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px;
+  gap:10px;
+}
+
+.viewer-top h2 {
+  font-family:'Playfair Display',serif;
+  font-size:21px;
+}
+
+.viewer-top button {
+  border:none;
+  border-radius:20px;
+  background:#f8e5ed;
+  color:#a86687;
+  padding:10px 17px;
+  cursor:pointer;
+}
+
+iframe.project-frame {
+  display:block;
+  width:100%;
+  height:750px;
+  border:none;
+  border-radius:13px;
+  background:#fffafc;
+}
+
+.about {
+  width:85%;
+  max-width:750px;
+  margin:80px auto;
+  text-align:center;
+  padding:40px;
+  background:#ffffffa8;
+  border-radius:28px;
+}
+
+.about h2 {
+  font-family:'Playfair Display',serif;
+  color:#bd83a1;
+  font-size:28px;
+}
+
+.about p {
+  font-size:13px;
+  line-height:2;
+  color:#8c7a8e;
+}
+
+footer {
+  text-align:center;
+  padding:35px 15px;
+  font-size:12px;
+  line-height:2;
+  color:#ad8a9e;
+}
+
+/* FLOATING SPOTIFY PLAYER */
+
+.spotify-widget {
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  width:300px;
+  z-index:9999;
+  background:#fff9fc;
+  border:1px solid #efd8e6;
+  border-radius:20px;
+  padding:12px;
+  box-shadow:0 8px 30px #a77e982b;
+  transition:all .3s ease;
+}
+
+.spotify-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:9px;
+  padding:2px 3px;
+}
+
+.spotify-title {
+  font-family:'Playfair Display',serif;
+  color:#b87999;
+  font-size:14px;
+}
+
+.spotify-header button {
+  border:none;
+  background:#f5dce9;
+  color:#a45f83;
+  width:27px;
+  height:27px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:15px;
+  transition:.2s;
+}
+
+.spotify-header button:hover {
+  background:#edc8dc;
+  transform:scale(1.08);
+}
+
+.spotify-widget iframe {
+  display:block;
+  width:100%;
+  height:152px;
+  border:0;
+  border-radius:12px;
+}
+
+.spotify-widget.minimized {
+  width:auto;
+  padding:0;
+  border:none;
+  background:transparent;
+  box-shadow:none;
+}
+
+.spotify-widget.minimized .spotify-header {
+  margin:0;
+}
+
+.spotify-widget.minimized .spotify-title,
+.spotify-widget.minimized iframe {
+  display:none;
+}
+
+.spotify-widget.minimized .spotify-header button {
+  width:52px;
+  height:52px;
+  font-size:22px;
+  background:#f4dce9;
+  border:1px solid white;
+  box-shadow:0 5px 20px #a77e9833;
+}
+
+.spotify-widget.minimized .spotify-header button:hover {
+  transform:scale(1.1);
+}
+
+@media(max-width:600px) {
+  header {justify-content:center}
+  .hero {padding-top:45px}
+  .projects {grid-template-columns:1fr}
+  iframe.project-frame {height:650px}
+  .about {padding:25px}
+
+  .spotify-widget {
+    width:265px;
+    right:12px;
+    bottom:12px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">NMJ Digital Archive ♡</div>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">WELCOME TO OUR DIGITAL WORLD</div>
+
+  <h1>NMJ Digital Archive</h1>
+
+  <h2>Three Minds, One Digital Universe.</h2>
+
+  <p>
+    A collection of ideas, creativity, and digital experiences
+    created with imagination and passion.
+    Explore our projects and discover something wonderful
+    in every corner of our digital world.
+  </p>
+
+  <div class="decor">୨୧ ✿ ♡ 🦢 ✧</div>
+  <div class="divider"></div>
+</section>
+
+<h2 class="section-title">Our Digital Collections</h2>
+
+<p class="section-sub">
+  Every project tells a story. Choose one and explore!
+</p>
+
+<section class="projects">
+
+  <button class="project pink"
+  onclick="openProject('Janet CV','https://naomimichelle2602-hue.github.io/Naomi/CV_Janet_IRL.html')">
+    <div class="emoji">🎀</div>
+    <h3>Janet's CV</h3>
+    <p>A personal creative curriculum vitae.</p>
+    <span class="open">Explore project ↗</span>
+  </button>
+
+  <button class="project lavender"
+  onclick="openProject('Maureen CV','https://naomimichelle2602-hue.github.io/Naomi/CV_Maureen_IRL.html')">
+    <div class="emoji">🌷</div>
+    <h3>Maureen's CV</h3>
+    <p>A beautiful personal profile and portfolio.</p>
+    <span class="open">Explore project ↗</span>
+  </button>
+
+  <button class="project pink"
+  onclick="openProject('Naomi CV','https://naomimichelle2602-hue.github.io/Naomi/CV_Naomi_IRL.html')">
+    <div class="emoji">💗</div>
+    <h3>Naomi's CV</h3>
+    <p>A personal profile, experience, and creative portfolio.</p>
+    <span class="open">Explore project ↗</span>
+  </button>
+
+  <button class="project yellow"
+  onclick="openProject('Sweetie Kitchen','https://maureen8310-prog.github.io/sweetie-kitchen/')">
+    <div class="emoji">🍓</div>
+    <h3>Sweetie Kitchen</h3>
+    <p>A cute cooking game with delicious recipes.</p>
+    <span class="open">Play game ↗</span>
+  </button>
+
+  <button class="project pink"
+  onclick="openProject('Mooncake Festival','https://naomimichelle2602-hue.github.io/Naomi/mooncakefestival.html')">
+    <div class="emoji">🏮</div>
+    <h3>Mooncake Festival</h3>
+    <p>Discover traditions, games, and festival activities.</p>
+    <span class="open">Explore festival ↗</span>
+  </button>
+
+  <button class="project lavender"
+  onclick="openExternal('Bookstory Gemini','https://share.gemini.google/0VVrptwSVyMJ')">
+    <div class="emoji">📚</div>
+    <h3>Bookstory Gemini</h3>
+    <p>A creative storytelling experience powered by Gemini.</p>
+    <span class="open">Read bookstory ↗</span>
+  </button>
+
+  <button class="project blue"
+  onclick="openProject('Softly Skincare','https://naomimichelle2602-hue.github.io/Naomi/softly_skincare.html')">
+    <div class="emoji">🧴</div>
+    <h3>Softly Skincare</h3>
+    <p>A soft and elegant skincare website.</p>
+    <span class="open">Discover more ↗</span>
+  </button>
+
+  <button class="project pink"
+  onclick="openProject('AI Magic Mirror','https://naomimichelle2602-hue.github.io/Naomi/foglipstick.html')">
+    <div class="emoji">🪞</div>
+    <h3>AI Magic Mirror</h3>
+    <p>An interactive digital mirror experience.</p>
+    <span class="open">Try it ↗</span>
+  </button>
+
+  <button class="project yellow"
+  onclick="openProject('Project Proposal','https://naomimichelle2602-hue.github.io/Naomi/proposalirl.html')">
+    <div class="emoji">📖</div>
+    <h3>Project Proposal</h3>
+    <p>Discover the concept and planning behind our project.</p>
+    <span class="open">Read proposal ↗</span>
+  </button>
+
+</section>
+
+<!-- PROJECT PREVIEW -->
+
+<section class="viewer" id="viewer">
+  <div class="viewer-top">
+    <h2 id="viewerTitle">Project Preview ♡</h2>
+    <button onclick="closeProject()">✕ Close</button>
+  </div>
+
+  <iframe
+    class="project-frame"
+    id="projectFrame"
+    title="Project Preview"
+    allow="camera; microphone; fullscreen; autoplay; clipboard-write"
+    allowfullscreen>
+  </iframe>
+</section>
+
+<!-- EXTERNAL PAGE -->
+
+<section class="viewer" id="external">
+  <div class="viewer-top">
+    <h2 id="externalTitle">Bookstory Gemini ♡</h2>
+    <button onclick="closeExternal()">✕ Close</button>
+  </div>
+
+  <div style="text-align:center;padding:55px 20px">
+    <div style="font-size:55px">📚✨</div>
+
+    <h2 style="font-family:'Playfair Display',serif;color:#bd789b">
+      Your Story Awaits!
+    </h2>
+
+    <p style="font-size:13px;line-height:2;color:#968598">
+      Continue your creative storytelling journey
+      and explore the Bookstory Gemini project.
+    </p>
+
+    <a id="externalLink"
+       href="https://share.gemini.google/0VVrptwSVyMJ"
+       target="_blank"
+       rel="noopener"
+       style="display:inline-block;background:#f4dce9;color:#985e7c;text-decoration:none;padding:13px 25px;border-radius:30px;margin-top:15px">
+       Open Bookstory Gemini ↗
+    </a>
+  </div>
+</section>
+
+<section class="about">
+  <div style="font-size:38px">🦢 ♡ ✿</div>
+
+  <h2>About NMJ Digital Archive</h2>
+
+  <p>
+    NMJ Digital Archive is a shared digital space
+    created by three creative minds.
+    It brings together our projects, ideas,
+    experiments, and imagination into one place.
+
+    Every creation represents a little part
+    of our journey in exploring technology
+    and expressing creativity.
+  </p>
+
+  <h3 style="font-family:'Playfair Display',serif;color:#bd83a1">
+    Three Minds, One Digital Universe ♡
+  </h3>
+</section>
+
+<footer>
+  © 2026 NMJ Digital Archive
+  <br>
+  Made with love by NMJ ♡
+  <br>
+  Thank you for visiting our digital world!
+</footer>
+
+<!-- FLOATING SPOTIFY PLAYER -->
+
+<div class="spotify-widget" id="spotifyWidget">
+
+  <div class="spotify-header">
+    <span class="spotify-title">♡ Our Little Playlist</span>
+
+    <button
+      onclick="toggleSpotify()"
+      id="spotifyToggle"
+      aria-label="Minimize Spotify player"
+      title="Minimize player">
+      −
+    </button>
+  </div>
+
+  <iframe
+    data-testid="embed-iframe"
+    src="https://open.spotify.com/embed/track/312z6PZ8wwREck8613PkJk?utm_source=generator&si=854f086c689141a8"
+    width="100%"
+    height="152"
+    frameborder="0"
+    allowfullscreen
+    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+    loading="lazy">
+  </iframe>
+
+</div>
+
+<script>
+
+function openProject(title,url) {
+
+  document.getElementById('external').classList.remove('active');
+
+  const viewer = document.getElementById('viewer');
+
+  document.getElementById('viewerTitle').textContent = title + ' ♡';
+
+  document.getElementById('projectFrame').src = url;
+
+  viewer.classList.add('active');
+
+  viewer.scrollIntoView({
+    behavior:'smooth',
+    block:'start'
+  });
+}
+
+function closeProject() {
+  document.getElementById('viewer').classList.remove('active');
+  document.getElementById('projectFrame').src='about:blank';
+}
+
+function openExternal(title,url) {
+
+  closeProject();
+
+  document.getElementById('externalTitle').textContent = title + ' ♡';
+
+  document.getElementById('externalLink').href = url;
+
+  const section = document.getElementById('external');
+
+  section.classList.add('active');
+
+  section.scrollIntoView({
+    behavior:'smooth',
+    block:'start'
+  });
+}
+
+function closeExternal() {
+  document.getElementById('external').classList.remove('active');
+}
+
+function toggleSpotify() {
+
+  const widget = document.getElementById('spotifyWidget');
+  const button = document.getElementById('spotifyToggle');
+
+  widget.classList.toggle('minimized');
+
+  if(widget.classList.contains('minimized')) {
+    button.textContent = '♫';
+    button.title = 'Open music player';
+    button.setAttribute('aria-label','Open music player');
+  } else {
+    button.textContent = '−';
+    button.title = 'Minimize player';
+    button.setAttribute('aria-label','Minimize Spotify player');
+  }
+}
+
+</script>
+
+</body>
+</html>
